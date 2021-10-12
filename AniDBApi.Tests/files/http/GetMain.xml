@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<main>
+    <hotanime>
+        <anime id="16256" restricted="false">
+            <episodecount>20</episodecount>
+            <startdate>2021-08-01</startdate>
+            <title xml:lang="x-jat" type="main">Jahy-sama wa Kujikenai!</title>
+            <ratings>
+                <permanent count="104">4.98</permanent>
+                <temporary count="105">6.33</temporary>
+            </ratings>
+            <picture>260693.jpg</picture>
+        </anime>
+        <anime id="15676" restricted="false">
+            <episodecount>11</episodecount>
+            <startdate>2021-07-23</startdate>
+            <enddate>2021-09-28</enddate>
+            <title xml:lang="x-jat" type="main">Heion Sedai no Idaten-tachi</title>
+            <ratings>
+                <permanent count="210">5.98</permanent>
+                <temporary count="212">6.81</temporary>
+            </ratings>
+            <picture>260968.jpg</picture>
+        </anime>
+        <anime id="15954" restricted="false">
+            <episodecount>12</episodecount>
+            <startdate>2021-10-04</startdate>
+            <title xml:lang="x-jat" type="main">Mushoku Tensei: Isekai Ittara Honki Dasu (2021)</title>
+            <ratings>
+                <permanent count="54">7.15</permanent>
+                <temporary count="57">7.11</temporary>
+            </ratings>
+            <picture>265678.jpg</picture>
+        </anime>
+        <anime id="15656" restricted="false">
+            <episodecount>12</episodecount>
+            <startdate>2021-08-14</startdate>
+            <title xml:lang="x-jat" type="main">Kaizoku Oujo</title>
+            <ratings>
+                <permanent count="62">5.05</permanent>
+                <temporary count="62">6.19</temporary>
+                <review count="1">4.83</review>
+            </ratings>
+            <picture>264608.jpg</picture>
+        </anime>
+        <anime id="15931" restricted="false">
+            <episodecount>1</episodecount>
+            <startdate>2021-08-18</startdate>
+            <enddate>2021-08-18</enddate>
+            <title xml:lang="x-jat" type="main">Tonikaku Kawaii: SNS</title>
+            <ratings>
+                <permanent count="138">6.59</permanent>
+                <temporary count="139">6.99</temporary>
+            </ratings>
+            <picture>260378.jpg</picture>
+        </anime>
+        <anime id="16132" restricted="false">
+            <episodecount>12</episodecount>
+            <startdate>2021-10-03</startdate>
+            <title xml:lang="x-jat" type="main">Mieruko-chan</title>
+            <ratings>
+                <permanent count="42">5.65</permanent>
+                <temporary count="42">6.22</temporary>
+            </ratings>
+            <picture>264024.jpg</picture>
+        </anime>
+        <anime id="16172" restricted="false">
+            <episodecount>12</episodecount>
+            <startdate>2021-10-03</startdate>
+            <title xml:lang="x-jat" type="main">86 (2021)</title>
+            <ratings>
+                <permanent count="29">7.75</permanent>
+                <temporary count="29">7.44</temporary>
+            </ratings>
+            <picture>264657.jpg</picture>
+        </anime>
+        <anime id="16198" restricted="true">
+            <episodecount>2</episodecount>
+            <startdate>2021-08-06</startdate>
+            <enddate>2021-08-06</enddate>
+            <title xml:lang="x-jat" type="main">Imaizumin-chi wa Douyara Gal no Tamariba ni Natteru Rashii</title>
+            <ratings>
+                <permanent count="67">6.83</permanent>
+                <temporary count="71">7.05</temporary>
+            </ratings>
+            <picture>259972.jpg</picture>
+        </anime>
+        <anime id="15834" restricted="false">
+            <episodecount>12</episodecount>
+            <startdate>2021-07-15</startdate>
+            <enddate>2021-09-30</enddate>
+            <title xml:lang="x-jat" type="main">Night Head 2041</title>
+            <ratings>
+                <permanent count="88">2.96</permanent>
+                <temporary count="88">5.18</temporary>
+            </ratings>
+            <picture>265850.jpg</picture>
+        </anime>
+        <anime id="15472" restricted="false">
+            <episodecount>8</episodecount>
+            <startdate>2021-08-01</startdate>
+            <enddate>2021-09-26</enddate>
+            <title xml:lang="x-jat" type="main">Magia Record: Mahou Shoujo Madoka Magica Gaiden 2nd Season - Kakusei Zen`ya</title>
+            <ratings>
+                <permanent count="75">4.76</permanent>
+                <temporary count="75">6.29</temporary>
+            </ratings>
+            <picture>261303.jpg</picture>
+        </anime>
+    </hotanime>
+    <randomsimilar>
+        <similar>
+            <source aid="634" restricted="false">
+                <title xml:lang="x-jat" type="main">Air Master</title>
+                <picture>10893.jpg</picture>
+            </source>
+            <target aid="618" restricted="false">
+                <title xml:lang="x-jat" type="main">Ikkitousen</title>
+                <picture>4999.jpg</picture>
+            </target>
+        </similar>
+        <similar>
+            <source aid="12545" restricted="false">
+                <title xml:lang="x-jat" type="main">Citrus</title>
+                <picture>229637.jpg</picture>
+            </source>
+            <target aid="1297" restricted="false">
+                <title xml:lang="x-jat" type="main">Maria-sama ga Miteru</title>
+                <picture>127598.jpg</picture>
+            </target>
+        </similar>
+        <similar>
+            <source aid="8729" restricted="false">
+                <title xml:lang="x-jat" type="main">Danshi Koukousei no Nichijou</title>
+                <picture>229267.jpg</picture>
+            </source>
+            <target aid="3468" restricted="false">
+                <title xml:lang="x-jat" type="main">Gintama</title>
+                <picture>221848.jpg</picture>
+            </target>
+        </similar>
+        <similar>
+            <source aid="6646" restricted="false">
+                <title xml:lang="x-jat" type="main">Hanamaru Youchien</title>
+                <picture>29618.jpg</picture>
+            </source>
+            <target aid="5029" restricted="false">
+                <title xml:lang="x-jat" type="main">Kodomo no Jikan (2007)</title>
+                <picture>229418.jpg</picture>
+            </target>
+        </similar>
+        <similar>
+            <source aid="6646" restricted="false">
+                <title xml:lang="x-jat" type="main">Hanamaru Youchien</title>
+                <picture>29618.jpg</picture>
+            </source>
+            <target aid="4919" restricted="false">
+                <title xml:lang="x-jat" type="main">Potemayo</title>
+                <picture>61356.jpg</picture>
+            </target>
+        </similar>
+        <similar>
+            <source aid="3291" restricted="false">
+                <title xml:lang="x-jat" type="main">Jigoku Shoujo</title>
+                <picture>153446.jpg</picture>
+            </source>
+            <target aid="5549" restricted="false">
+                <title xml:lang="x-jat" type="main">Shigofumi</title>
+                <picture>229715.jpg</picture>
+            </target>
+        </similar>
+        <similar>
+            <source aid="13261" restricted="false">
+                <title xml:lang="x-jat" type="main">Promare</title>
+                <picture>231449.jpg</picture>
+            </source>
+            <target aid="4575" restricted="false">
+                <title xml:lang="x-jat" type="main">Tengen Toppa Gurren Lagann</title>
+                <picture>221630.jpg</picture>
+            </target>
+        </similar>
+        <similar>
+            <source aid="13376" restricted="false">
+                <title xml:lang="x-jat" type="main">Takunomi.</title>
+                <picture>225151.jpg</picture>
+            </source>
+            <target aid="11601" restricted="false">
+                <title xml:lang="x-jat" type="main">Dagashi Kashi</title>
+                <picture>225156.jpg</picture>
+            </target>
+        </similar>
+        <similar>
+            <source aid="13871" restricted="false">
+                <title xml:lang="x-jat" type="main">Tensei Shitara Slime Datta Ken</title>
+                <picture>224634.jpg</picture>
+            </source>
+            <target aid="11261" restricted="false">
+                <title xml:lang="x-jat" type="main">Kono Subarashii Sekai ni Shukufuku o!</title>
+                <picture>221774.jpg</picture>
+            </target>
+        </similar>
+        <similar>
+            <source aid="13875" restricted="false">
+                <title xml:lang="x-jat" type="main">Wakaokami wa Shougakusei!</title>
+                <picture>221872.jpg</picture>
+            </source>
+            <target aid="13030" restricted="false">
+                <title xml:lang="x-jat" type="main">Konohana Kitan</title>
+                <picture>221608.jpg</picture>
+            </target>
+        </similar>
+    </randomsimilar>
+    <randomrecommendation>
+        <recommendation>
+            <anime id="11325" restricted="true">
+                <type>OVA</type>
+                <episodecount>1</episodecount>
+                <startdate>2015-08-28</startdate>
+                <enddate>2015-08-28</enddate>
+                <title xml:lang="x-jat" type="main">Aniki no Yome-san nara, Ore ni Hamerarete Hiihii Itteru Tokoro Da yo</title>
+                <picture>174964.jpg</picture>
+                <ratings>
+                    <permanent count="173">280</permanent>
+                    <recommendations>1</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+        <recommendation>
+            <anime id="8929" restricted="false">
+                <type>TV Series</type>
+                <episodecount>10</episodecount>
+                <startdate>2013-07-08</startdate>
+                <enddate>2013-09-09</enddate>
+                <title xml:lang="x-jat" type="main">Blood Lad</title>
+                <picture>137455.jpg</picture>
+                <ratings>
+                    <permanent count="3248">560</permanent>
+                    <recommendations>27</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+        <recommendation>
+            <anime id="10365" restricted="false">
+                <type>TV Series</type>
+                <episodecount>12</episodecount>
+                <startdate>2014-04-10</startdate>
+                <enddate>2014-06-26</enddate>
+                <title xml:lang="x-jat" type="main">Fuuun Ishin Dai Shougun</title>
+                <picture>147689.jpg</picture>
+                <ratings>
+                    <permanent count="461">202</permanent>
+                    <recommendations>4</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+        <recommendation>
+            <anime id="9949" restricted="false">
+                <type>TV Series</type>
+                <episodecount>12</episodecount>
+                <startdate>2013-10-11</startdate>
+                <enddate>2013-12-27</enddate>
+                <title xml:lang="x-jat" type="main">Kakumeiki Valvrave (2013)</title>
+                <picture>143063.jpg</picture>
+                <ratings>
+                    <permanent count="1507">525</permanent>
+                    <recommendations>13</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+        <recommendation>
+            <anime id="5922" restricted="false">
+                <type>TV Series</type>
+                <episodecount>12</episodecount>
+                <startdate>2008-07-09</startdate>
+                <enddate>2008-09-24</enddate>
+                <title xml:lang="x-jat" type="main">Koihime Musou</title>
+                <picture>8716.jpg</picture>
+                <ratings>
+                    <permanent count="1712">400</permanent>
+                    <recommendations>12</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+        <recommendation>
+            <anime id="1810" restricted="false">
+                <type>TV Series</type>
+                <episodecount>24</episodecount>
+                <startdate>2004-06-25</startdate>
+                <enddate>2004-12-16</enddate>
+                <title xml:lang="x-jat" type="main">Kurau Phantom Memory</title>
+                <picture>257605.jpg</picture>
+                <ratings>
+                    <permanent count="1608">667</permanent>
+                    <recommendations>9</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+        <recommendation>
+            <anime id="12673" restricted="false">
+                <type>TV Series</type>
+                <episodecount>12</episodecount>
+                <startdate>2017-07-05</startdate>
+                <enddate>2017-09-20</enddate>
+                <title xml:lang="x-jat" type="main">Nana Maru San Batsu</title>
+                <picture>203302.jpg</picture>
+                <ratings>
+                    <permanent count="553">418</permanent>
+                    <recommendations>2</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+        <recommendation>
+            <anime id="15557" restricted="false">
+                <type>TV Series</type>
+                <episodecount>12</episodecount>
+                <startdate>2021-01-09</startdate>
+                <enddate>2021-03-27</enddate>
+                <title xml:lang="x-jat" type="main">Ore dake Haireru Kakushi Dungeon</title>
+                <picture>251998.jpg</picture>
+                <ratings>
+                    <permanent count="657">278</permanent>
+                    <recommendations>9</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+        <recommendation>
+            <anime id="8273" restricted="false">
+                <type>Web</type>
+                <episodecount>1</episodecount>
+                <startdate>2010-08-01</startdate>
+                <enddate>2010-08-01</enddate>
+                <title xml:lang="x-jat" type="main">Out of Sight</title>
+                <picture>65862.jpg</picture>
+                <ratings>
+                    <permanent count="461">849</permanent>
+                    <recommendations>9</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+        <recommendation>
+            <anime id="364" restricted="false">
+                <type>TV Series</type>
+                <episodecount>26</episodecount>
+                <startdate>1997-04-04</startdate>
+                <enddate>1997-09-26</enddate>
+                <title xml:lang="x-jat" type="main">Slayers Try</title>
+                <picture>152835.jpg</picture>
+                <ratings>
+                    <permanent count="2558">726</permanent>
+                    <recommendations>8</recommendations>
+                </ratings>
+            </anime>
+        </recommendation>
+    </randomrecommendation>
+</main>

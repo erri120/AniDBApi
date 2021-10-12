@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<randomsimilar>
+    <similar>
+        <source aid="4932" restricted="false">
+            <title xml:lang="x-jat" type="main">Gekijouban Kara no Kyoukai: The Garden of Sinners</title>
+            <picture>222057.jpg</picture>
+        </source>
+        <target aid="8160" restricted="false">
+            <title xml:lang="x-jat" type="main">Fate/Zero</title>
+            <picture>223747.jpg</picture>
+        </target>
+    </similar>
+    <similar>
+        <source aid="7719" restricted="false">
+            <title xml:lang="x-jat" type="main">Gosick</title>
+            <picture>221063.jpg</picture>
+        </source>
+        <target aid="8370" restricted="false">
+            <title xml:lang="x-jat" type="main">Kamisama no Memo-chou: It`s the Only NEET Thing to Do.</title>
+            <picture>231913.jpg</picture>
+        </target>
+    </similar>
+    <similar>
+        <source aid="9518" restricted="false">
+            <title xml:lang="x-jat" type="main">Kyoukai no Kanata</title>
+            <picture>146281.jpg</picture>
+        </source>
+        <target aid="11500" restricted="false">
+            <title xml:lang="x-jat" type="main">Musaigen no Phantom World</title>
+            <picture>240268.jpg</picture>
+        </target>
+    </similar>
+    <similar>
+        <source aid="5779" restricted="false">
+            <title xml:lang="x-jat" type="main">Michiko to Hacchin</title>
+            <picture>13614.jpg</picture>
+        </source>
+        <target aid="4966" restricted="false">
+            <title xml:lang="x-jat" type="main">El Cazador de la Bruja</title>
+            <picture>153498.jpg</picture>
+        </target>
+    </similar>
+    <similar>
+        <source aid="7" restricted="false">
+            <title xml:lang="x-jat" type="main">Mononoke-hime</title>
+            <picture>221219.jpg</picture>
+        </source>
+        <target aid="112" restricted="false">
+            <title xml:lang="x-jat" type="main">Sen to Chihiro no Kamikakushi</title>
+            <picture>224521.jpg</picture>
+        </target>
+    </similar>
+    <similar>
+        <source aid="9699" restricted="true">
+            <title xml:lang="x-jat" type="main">Natsuyasumi.</title>
+            <picture>132003.jpg</picture>
+        </source>
+        <target aid="4544" restricted="true">
+            <title xml:lang="x-jat" type="main">Boku no Piko</title>
+            <picture>10961.jpg</picture>
+        </target>
+    </similar>
+    <similar>
+        <source aid="9998" restricted="false">
+            <title xml:lang="x-jat" type="main">No Game No Life</title>
+            <picture>226452.jpg</picture>
+        </source>
+        <target aid="9677" restricted="false">
+            <title xml:lang="x-jat" type="main">Log Horizon</title>
+            <picture>163844.jpg</picture>
+        </target>
+    </similar>
+    <similar>
+        <source aid="4191" restricted="false">
+            <title xml:lang="x-jat" type="main">Paprika</title>
+            <picture>228328.jpg</picture>
+        </source>
+        <target aid="6677" restricted="false">
+            <title xml:lang="x-jat" type="main">Kuuchuu Buranko</title>
+            <picture>30791.jpg</picture>
+        </target>
+    </similar>
+    <similar>
+        <source aid="8852" restricted="false">
+            <title xml:lang="x-jat" type="main">Tasogare Otome x Amnesia</title>
+            <picture>79569.jpg</picture>
+        </source>
+        <target aid="8181" restricted="false">
+            <title xml:lang="x-jat" type="main">Ano Hi Mita Hana no Namae o Bokutachi wa Mada Shiranai.</title>
+            <picture>221330.jpg</picture>
+        </target>
+    </similar>
+    <similar>
+        <source aid="9310" restricted="false">
+            <title xml:lang="x-jat" type="main">Yahari Ore no Seishun LoveCome wa Machigatte Iru.</title>
+            <picture>134679.jpg</picture>
+        </source>
+        <target aid="8419" restricted="false">
+            <title xml:lang="x-jat" type="main">Boku wa Tomodachi ga Sukunai</title>
+            <picture>178917.jpg</picture>
+        </target>
+    </similar>
+</randomsimilar>

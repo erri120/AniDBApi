@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hotanime>
+    <anime id="16256" restricted="false">
+        <episodecount>20</episodecount>
+        <startdate>2021-08-01</startdate>
+        <title xml:lang="x-jat" type="main">Jahy-sama wa Kujikenai!</title>
+        <ratings>
+            <permanent count="104">4.98</permanent>
+            <temporary count="105">6.33</temporary>
+        </ratings>
+        <picture>260693.jpg</picture>
+    </anime>
+    <anime id="15676" restricted="false">
+        <episodecount>11</episodecount>
+        <startdate>2021-07-23</startdate>
+        <enddate>2021-09-28</enddate>
+        <title xml:lang="x-jat" type="main">Heion Sedai no Idaten-tachi</title>
+        <ratings>
+            <permanent count="210">5.98</permanent>
+            <temporary count="212">6.81</temporary>
+        </ratings>
+        <picture>260968.jpg</picture>
+    </anime>
+    <anime id="15954" restricted="false">
+        <episodecount>12</episodecount>
+        <startdate>2021-10-04</startdate>
+        <title xml:lang="x-jat" type="main">Mushoku Tensei: Isekai Ittara Honki Dasu (2021)</title>
+        <ratings>
+            <permanent count="54">7.15</permanent>
+            <temporary count="57">7.11</temporary>
+        </ratings>
+        <picture>265678.jpg</picture>
+    </anime>
+    <anime id="15656" restricted="false">
+        <episodecount>12</episodecount>
+        <startdate>2021-08-14</startdate>
+        <title xml:lang="x-jat" type="main">Kaizoku Oujo</title>
+        <ratings>
+            <permanent count="62">5.05</permanent>
+            <temporary count="62">6.19</temporary>
+            <review count="1">4.83</review>
+        </ratings>
+        <picture>264608.jpg</picture>
+    </anime>
+    <anime id="15931" restricted="false">
+        <episodecount>1</episodecount>
+        <startdate>2021-08-18</startdate>
+        <enddate>2021-08-18</enddate>
+        <title xml:lang="x-jat" type="main">Tonikaku Kawaii: SNS</title>
+        <ratings>
+            <permanent count="138">6.59</permanent>
+            <temporary count="139">6.99</temporary>
+        </ratings>
+        <picture>260378.jpg</picture>
+    </anime>
+    <anime id="16132" restricted="false">
+        <episodecount>12</episodecount>
+        <startdate>2021-10-03</startdate>
+        <title xml:lang="x-jat" type="main">Mieruko-chan</title>
+        <ratings>
+            <permanent count="42">5.65</permanent>
+            <temporary count="42">6.22</temporary>
+        </ratings>
+        <picture>264024.jpg</picture>
+    </anime>
+    <anime id="16172" restricted="false">
+        <episodecount>12</episodecount>
+        <startdate>2021-10-03</startdate>
+        <title xml:lang="x-jat" type="main">86 (2021)</title>
+        <ratings>
+            <permanent count="29">7.75</permanent>
+            <temporary count="29">7.44</temporary>
+        </ratings>
+        <picture>264657.jpg</picture>
+    </anime>
+    <anime id="16198" restricted="true">
+        <episodecount>2</episodecount>
+        <startdate>2021-08-06</startdate>
+        <enddate>2021-08-06</enddate>
+        <title xml:lang="x-jat" type="main">Imaizumin-chi wa Douyara Gal no Tamariba ni Natteru Rashii</title>
+        <ratings>
+            <permanent count="67">6.83</permanent>
+            <temporary count="71">7.05</temporary>
+        </ratings>
+        <picture>259972.jpg</picture>
+    </anime>
+    <anime id="15834" restricted="false">
+        <episodecount>12</episodecount>
+        <startdate>2021-07-15</startdate>
+        <enddate>2021-09-30</enddate>
+        <title xml:lang="x-jat" type="main">Night Head 2041</title>
+        <ratings>
+            <permanent count="88">2.96</permanent>
+            <temporary count="88">5.18</temporary>
+        </ratings>
+        <picture>265850.jpg</picture>
+    </anime>
+    <anime id="15472" restricted="false">
+        <episodecount>8</episodecount>
+        <startdate>2021-08-01</startdate>
+        <enddate>2021-09-26</enddate>
+        <title xml:lang="x-jat" type="main">Magia Record: Mahou Shoujo Madoka Magica Gaiden 2nd Season - Kakusei Zen`ya</title>
+        <ratings>
+            <permanent count="75">4.76</permanent>
+            <temporary count="75">6.29</temporary>
+        </ratings>
+        <picture>261303.jpg</picture>
+    </anime>
+</hotanime>

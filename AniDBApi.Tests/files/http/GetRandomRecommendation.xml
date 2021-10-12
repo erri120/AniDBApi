@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<randomrecommendation>
+    <recommendation>
+        <anime id="14659" restricted="false">
+            <type>TV Series</type>
+            <episodecount>12</episodecount>
+            <startdate>2019-10-08</startdate>
+            <enddate>2019-12-26</enddate>
+            <title xml:lang="x-jat" type="main">Beastars</title>
+            <picture>257579.jpg</picture>
+            <ratings>
+                <permanent count="1212">796</permanent>
+                <recommendations>19</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+    <recommendation>
+        <anime id="15833" restricted="false">
+            <type>TV Series</type>
+            <episodecount>11</episodecount>
+            <startdate>2021-04-15</startdate>
+            <enddate>2021-06-24</enddate>
+            <title xml:lang="x-jat" type="main">Cestvs: The Roman Fighter</title>
+            <picture>258350.jpg</picture>
+            <ratings>
+                <permanent count="80">297</permanent>
+                <recommendations>1</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+    <recommendation>
+        <anime id="10971" restricted="false">
+            <type>TV Series</type>
+            <episodecount>12</episodecount>
+            <startdate>2017-01-08</startdate>
+            <enddate>2017-03-26</enddate>
+            <title xml:lang="x-jat" type="main">Chain Chronicle: Haecceitas no Hikari</title>
+            <picture>196105.jpg</picture>
+            <ratings>
+                <permanent count="511">385</permanent>
+                <recommendations>3</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+    <recommendation>
+        <anime id="1120" restricted="true">
+            <type>OVA</type>
+            <episodecount>5</episodecount>
+            <startdate>1994-12-22</startdate>
+            <enddate>1997-11-28</enddate>
+            <title xml:lang="x-jat" type="main">Inma Youjo</title>
+            <picture>11803.jpg</picture>
+            <ratings>
+                <permanent count="278">465</permanent>
+                <recommendations>2</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+    <recommendation>
+        <anime id="8681" restricted="false">
+            <type>TV Series</type>
+            <episodecount>25</episodecount>
+            <startdate>2012-04-08</startdate>
+            <enddate>2012-09-23</enddate>
+            <title xml:lang="x-jat" type="main">Kuroko no Baske</title>
+            <picture>82678.jpg</picture>
+            <ratings>
+                <permanent count="2970">747</permanent>
+                <recommendations>19</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+    <recommendation>
+        <anime id="11549" restricted="false">
+            <type>TV Series</type>
+            <episodecount>227</episodecount>
+            <startdate>2013-04-08</startdate>
+            <enddate>2014-03-28</enddate>
+            <title xml:lang="x-jat" type="main">Mazinger ZIP!</title>
+            <picture>177066.jpg</picture>
+            <ratings>
+                <permanent count="9">230</permanent>
+                <recommendations>1</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+    <recommendation>
+        <anime id="13252" restricted="false">
+            <type>TV Series</type>
+            <episodecount>12</episodecount>
+            <startdate>2018-01-12</startdate>
+            <enddate>2018-03-30</enddate>
+            <title xml:lang="x-jat" type="main">Miira no Kaikata</title>
+            <picture>221833.jpg</picture>
+            <ratings>
+                <permanent count="427">500</permanent>
+                <recommendations>3</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+    <recommendation>
+        <anime id="11785" restricted="false">
+            <type>TV Series</type>
+            <episodecount>50</episodecount>
+            <startdate>2016-04-06</startdate>
+            <enddate>2017-03-29</enddate>
+            <title xml:lang="x-jat" type="main">Sousei no Onmyouji</title>
+            <picture>229011.jpg</picture>
+            <ratings>
+                <permanent count="1123">413</permanent>
+                <recommendations>7</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+    <recommendation>
+        <anime id="10022" restricted="false">
+            <type>TV Special</type>
+            <episodecount>1</episodecount>
+            <startdate>2013-12-31</startdate>
+            <enddate>2013-12-31</enddate>
+            <title xml:lang="x-jat" type="main">Sword Art Online: Extra Edition</title>
+            <picture>151778.jpg</picture>
+            <ratings>
+                <permanent count="2879">391</permanent>
+                <recommendations>21</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+    <recommendation>
+        <anime id="15795" restricted="false">
+            <type>TV Series</type>
+            <episodecount>12</episodecount>
+            <startdate>2021-07-07</startdate>
+            <enddate>2021-09-22</enddate>
+            <title xml:lang="x-jat" type="main">Tsuki ga Michibiku Isekai Douchuu</title>
+            <picture>260338.jpg</picture>
+            <ratings>
+                <permanent count="456">587</permanent>
+                <recommendations>8</recommendations>
+            </ratings>
+        </anime>
+    </recommendation>
+</randomrecommendation>
