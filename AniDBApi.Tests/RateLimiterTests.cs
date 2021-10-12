@@ -32,13 +32,14 @@ public class RateLimiterTests
         Assert.Equal(taskCount, list.Count);
 
         var lastTime = DateTime.UnixEpoch;
-        foreach (var curTime in list)
+        for (var i = 0; i < list.Count; i++)
         {
+            var curTime = list[i];
             var timeDiff = curTime - lastTime;
             Assert.True(
                 timeDiff >= interval,
                 "Difference between current and last task is less than the expected Interval: " +
-                $"{curTime:s} - {lastTime:s} < {interval:G}");
+                $"{curTime:O} - {lastTime:O} < {interval:G} ({i})");
             lastTime = curTime;
         }
     }
