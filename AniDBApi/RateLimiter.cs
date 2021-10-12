@@ -29,7 +29,7 @@ namespace AniDBApi
                     return;
                 }
 
-                var waitTimeSpan = _interval - diff;
+                var waitTimeSpan = _interval - diff + TimeSpan.FromMilliseconds(100);
                 await Task.Delay(waitTimeSpan, cancellationToken);
                 _lastTrigger = DateTime.UtcNow;
             }

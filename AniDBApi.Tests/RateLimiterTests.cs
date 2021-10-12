@@ -39,7 +39,7 @@ public class RateLimiterTests
             Assert.True(
                 timeDiff >= interval,
                 "Difference between current and last task is less than the expected Interval: " +
-                $"{curTime:O} - {lastTime:O} < {interval:G} ({i})");
+                $"{curTime:O} - {lastTime:O} = {timeDiff:G} < {interval:G} ({i})");
             lastTime = curTime;
         }
     }
