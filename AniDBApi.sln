@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniDBApi", "AniDBApi\AniDBApi.csproj", "{344B77C9-0AA9-40F5-9BAA-B09D0665159A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solutionItems", ".solutionItems", "{FB99AEFE-E102-45CB-A3E9-706DE78D7C2A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{344B77C9-0AA9-40F5-9BAA-B09D0665159A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{344B77C9-0AA9-40F5-9BAA-B09D0665159A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{344B77C9-0AA9-40F5-9BAA-B09D0665159A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{344B77C9-0AA9-40F5-9BAA-B09D0665159A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
