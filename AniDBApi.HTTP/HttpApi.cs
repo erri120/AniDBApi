@@ -23,6 +23,13 @@ namespace AniDBApi.HTTP
 
         private static readonly Regex ClientNameRegex = new("^[a-z]*$", RegexOptions.Compiled);
 
+        /// <summary></summary>
+        /// <param name="logger">Logger for logging all Api calls.</param>
+        /// <param name="client">HttpClient for accessing the Api.</param>
+        /// <param name="clientName">Name of the Client. You need to register your Client with AniDB first. The name has a max length of 16 characters and must only contain chars from a-z.</param>
+        /// <param name="clientVer">Version of the Client. You need to register your Client with AniDB first. The version must be between 0 and 9.</param>
+        /// <param name="baseUrl">Alternative Base Url for the Api.</param>
+        /// <exception cref="ArgumentException">The name or version of the Client is invalid.</exception>
         public HttpApi(ILogger<HttpApi> logger, HttpClient client, string clientName, int clientVer,
             string baseUrl = ApiBaseUrl)
         {
@@ -82,6 +89,7 @@ namespace AniDBApi.HTTP
         {
             _logger.LogDebug("Accessing {url}", url);
 
+            // TODO: error checking
             //<error code="302">client version missing or invalid</error>
 
             await _rateLimiter.Trigger(cancellationToken).ConfigureAwait(false);

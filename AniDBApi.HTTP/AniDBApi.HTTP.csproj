@@ -1,5 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
     
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\AniDBApi.HTTP.xml</DocumentationFile>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\AniDBApi.HTTP.xml</DocumentationFile>
+    </PropertyGroup>
+    
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2021.3.0-eap4" PrivateAssets="all" />
         <ProjectReference Include="..\AniDBApi\AniDBApi.csproj" />
