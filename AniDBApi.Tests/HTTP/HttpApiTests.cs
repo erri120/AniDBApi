@@ -13,7 +13,7 @@ public class HttpApiTests
 
     public HttpApiTests(ITestOutputHelper testOutputHelper)
     {
-        _logger= new XUnitLogger<HttpApi>(testOutputHelper);
+        _logger = new XUnitLogger<HttpApi>(testOutputHelper);
     }
 
     private HttpApi SetupApi(string fileName)

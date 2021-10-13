@@ -33,6 +33,8 @@ public static class HttpTestUtils
 
     public static HttpApi SetupApiFakeClient(ILogger<HttpApi> logger, Action<Mock<HttpMessageHandler>> setupHandler)
     {
+        Assert.True(TestUtils.IsCI);
+
         var handler = new Mock<HttpMessageHandler>();
         setupHandler(handler);
 
