@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using AniDBApi.HTTP;
 using Microsoft.Extensions.Logging;
 using Moq.Contrib.HttpClient;
@@ -20,7 +21,7 @@ public class HttpApiTests
     {
         return TestUtils.IsCI ? HttpTestUtils.SetupApiFakeClient(_logger, handler =>
         {
-            handler.SetupAnyRequest().ReturnsResponse(TestUtils.GetResult("http", fileName));
+            handler.SetupAnyRequest().ReturnsResponse(File.ReadAllText(TestUtils.GetResultPath("http", fileName)));
         }) : HttpTestUtils.SetupApiRealClient(_logger);
     }
 

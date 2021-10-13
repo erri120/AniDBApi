@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
 namespace AniDBApi.UDP
@@ -8,6 +10,9 @@ namespace AniDBApi.UDP
     {
         public readonly int ReturnCode;
         public readonly string ReturnString;
+
+        internal readonly List<List<string>> InternalLines = new();
+        public IReadOnlyList<IReadOnlyList<string>> Lines => InternalLines;
 
         internal UdpApiResult(int returnCode, string returnString)
         {
@@ -24,7 +29,9 @@ namespace AniDBApi.UDP
 
         public override string ToString()
         {
-            return $"{ReturnCode.ToString()} {ReturnString}";
+            return InternalLines.Any()
+                ? $"{ReturnCode.ToString()} {ReturnString}: {InternalLines.Count.ToString()} lines"
+                : $"{ReturnCode.ToString()} {ReturnString}";
         }
     }
 }

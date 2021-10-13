@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -20,16 +21,17 @@ public static class UdpTestUtils
         return new UdpApi(logger, new UdpClientWrapper(client));
     }
 
-    public static UdpApi SetupApiFakeClient(ILogger<UdpApi> logger, byte[] commandResult)
+    public static UdpApi SetupApiFakeClient(ILogger<UdpApi> logger, string resultFile)
     {
         Assert.True(TestUtils.IsCI);
+        Assert.True(File.Exists(resultFile));
 
         var client = new Mock<IUdpClient>();
         client.Setup(x => x.Connect(It.IsAny<string>(), It.IsAny<int>()));
         client.Setup(x => x.SendAsync(It.IsAny<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
             .Returns<ReadOnlyMemory<byte>,CancellationToken>((datagram, _) => new ValueTask<int>(datagram.Length));
         client.Setup(x => x.ReceiveAsync(It.IsAny<CancellationToken>()))
-            .Returns<CancellationToken>(_ => new ValueTask<UdpReceiveResult>(new UdpReceiveResult(commandResult, new IPEndPoint(0x2414188f, 1))));
+            .Returns<CancellationToken>(_ => new ValueTask<UdpReceiveResult>(new UdpReceiveResult(File.ReadAllBytes(resultFile), new IPEndPoint(0x2414188f, 1))));
 
         return new UdpApi(logger, client.Object, "testing.com", -1);
     }
