@@ -89,9 +89,6 @@ namespace AniDBApi.HTTP
         {
             _logger.LogDebug("Accessing {url}", url);
 
-            // TODO: error checking
-            //<error code="302">client version missing or invalid</error>
-
             await _rateLimiter.Trigger(cancellationToken).ConfigureAwait(false);
             var result = await _client.GetStringAsync(url, cancellationToken).ConfigureAwait(false);
             return result;
