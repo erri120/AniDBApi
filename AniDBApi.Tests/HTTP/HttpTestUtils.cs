@@ -21,13 +21,10 @@ public static class HttpTestUtils
             AutomaticDecompression = DecompressionMethods.GZip
         });
 
-        var clientName = Environment.GetEnvironmentVariable("CLIENT_NAME_HTTP", EnvironmentVariableTarget.Process);
-        var sClientVer = Environment.GetEnvironmentVariable("CLIENT_VER_HTTP", EnvironmentVariableTarget.Process);
+        var clientName = TestUtils.GetEnvironmentVariable("CLIENT_NAME_HTTP");
+        var sClientVer = TestUtils.GetEnvironmentVariable("CLIENT_VER_HTTP");
 
-        Assert.NotNull(clientName);
-        Assert.NotNull(sClientVer);
         Assert.True(int.TryParse(sClientVer, out var clientVer));
-
         return new HttpApi(logger, client, clientName!, clientVer);
     }
 

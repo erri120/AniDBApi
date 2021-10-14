@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
@@ -9,18 +10,20 @@ namespace AniDBApi.UDP
     {
         private readonly UdpApi _api;
 
-        public readonly UdpApiResult? AuthResult;
+        public UdpApiResult? AuthResult { get; private set; }
         public bool IsActive => _api.IsAuthenticated;
 
-        public AuthenticatedSession(UdpApi api, string username, string password)
+        internal AuthenticatedSession(UdpApi api)
         {
             _api = api;
-            if (_api.IsAuthenticated) return;
-            AuthResult = api.Auth(username, password).Result;
         }
 
-        public AuthenticatedSession(UdpApi api, (string, string) credentials)
-            : this(api, credentials.Item1, credentials.Item2) { }
+        public static async Task<AuthenticatedSession> CreateSession(UdpApi api, string username, string password, CancellationToken cancellationToken = default)
+        {
+            var session = new AuthenticatedSession(api);
+            session.AuthResult = await api.Auth(username, password, cancellationToken);
+            return session;
+        }
 
         public void Dispose()
         {

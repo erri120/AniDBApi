@@ -18,6 +18,13 @@ public static class TestUtils
         IsCI = isCI;
     }
 
+    public static string GetEnvironmentVariable(string name)
+    {
+        var value = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
+        Assert.NotNull(value);
+        return value!;
+    }
+
     public static string GetResultPath(string type, string name)
     {
         var path = Path.Combine("files", type, name);

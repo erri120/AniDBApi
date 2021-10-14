@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +26,10 @@ namespace AniDBApi.UDP
         private readonly int _clientVer;
 
         public bool IsAuthenticated { get; private set; }
+        public bool IsEncrypted { get; private set; }
+
         private string? _sessionKey;
+        private byte[]? _encryptionKey;
 
         public UdpApi(ILogger<UdpApi> logger, IUdpClient client, string clientName, int clientVer,
             string server = DefaultServer, int port = DefaultPort)
@@ -45,6 +49,30 @@ namespace AniDBApi.UDP
         public Task<UdpApiResult> Version(CancellationToken cancellationToken = default)
             => SendAndReceive("VERSION", "VERSION", cancellationToken);
 
+        public async Task<UdpApiResult> Encrypt(string username, string apiKey, CancellationToken cancellationToken = default)
+        {
+            if (IsEncrypted)
+                return UdpApiResult.CreateInternalError(_logger, "Session is already encrypted!");
+
+            var commandString = CreateCommandString("ENCRYPT", false,
+                $"user={username}", "type=1");
+
+            var result = await SendAndReceive("ENCRYPT", commandString, cancellationToken);
+            if (result.ReturnCode is 209)
+            {
+                _logger.LogInformation("Encryption enabled");
+                IsEncrypted = true;
+                var salt = GetStringAfterReturnCode(result);
+                _encryptionKey = CreateEncryptionKey(apiKey, salt);
+            }
+            else
+            {
+                _logger.LogError("Encryption failed with code {ErrorCode}: {Message}", result.ReturnCode.ToString(), result.ReturnString);
+            }
+
+            return result;
+        }
+
         public async Task<UdpApiResult> Auth(string username, string password, CancellationToken cancellationToken = default)
         {
             if (IsAuthenticated)
@@ -63,9 +91,7 @@ namespace AniDBApi.UDP
             {
                 _logger.LogInformation("User successfully authenticated");
                 IsAuthenticated = true;
-
-                var returnString = result.ReturnString;
-                _sessionKey = returnString[..returnString.IndexOf(' ')];
+                _sessionKey = GetStringAfterReturnCode(result);
             }
             else
             {
@@ -87,6 +113,9 @@ namespace AniDBApi.UDP
                 _logger.LogInformation("User successfully logged out");
                 IsAuthenticated = false;
                 _sessionKey = null;
+
+                IsEncrypted = false;
+                _encryptionKey = null;
             }
             else
             {
@@ -111,6 +140,14 @@ namespace AniDBApi.UDP
             await _rateLimiter.Trigger(cancellationToken);
 
             var bytes = Encoding.ASCII.GetBytes(commandString);
+            if (_encryptionKey != null && IsEncrypted)
+            {
+                using var aes = Aes.Create();
+                aes.BlockSize = 128;
+                aes.Key = _encryptionKey;
+                aes.Mode = CipherMode.ECB;
+                bytes = aes.EncryptEcb(bytes, PaddingMode.PKCS7);
+            }
 
             // TODO: there is no overload for byte[] that accepts a CancellationToken so this uses SendAsync(ReadOnlyMemory<byte>, CancellationToken)
             var length = await _client.SendAsync(bytes, cancellationToken);
@@ -119,9 +156,38 @@ namespace AniDBApi.UDP
 
             var result = await _client.ReceiveAsync(commandName, cancellationToken);
 
+            var resultBytes = result.Buffer;
+            if (_encryptionKey != null && IsEncrypted)
+            {
+                using var aes = Aes.Create();
+                aes.BlockSize = 128;
+                aes.Key = _encryptionKey;
+                aes.Mode = CipherMode.ECB;
+                resultBytes = aes.DecryptEcb(resultBytes, PaddingMode.PKCS7);
+            }
+
             // TODO: find a better solution
-            await File.WriteAllBytesAsync($"{commandName}.dat", result.Buffer, cancellationToken);
-            return CreateResult(result.Buffer);
+            await File.WriteAllBytesAsync($"{commandName}.dat", resultBytes, cancellationToken);
+            return CreateResult(resultBytes);
+        }
+
+        private static byte[] CreateEncryptionKey(string apiKey, string salt)
+        {
+            var concat = apiKey + salt;
+            var bytes = Encoding.ASCII.GetBytes(concat);
+
+            var hash = new byte[16];
+            var count = MD5.HashData(new ReadOnlySpan<byte>(bytes, 0, bytes.Length), new Span<byte>(hash, 0, hash.Length));
+            if (count != hash.Length)
+                throw new NotImplementedException();
+
+            return hash;
+        }
+
+        private static string GetStringAfterReturnCode(UdpApiResult result)
+        {
+            var returnString = result.ReturnString;
+            return returnString[..returnString.IndexOf(' ')];
         }
 
         private string CreateCommandString(string commandName, bool requiresSessionKey, params string[] parameters)

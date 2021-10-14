@@ -20,13 +20,10 @@ public static class UdpTestUtils
 
         var client = new UdpClient();
 
-        var clientName = Environment.GetEnvironmentVariable("CLIENT_NAME_UDP", EnvironmentVariableTarget.Process);
-        var sClientVer = Environment.GetEnvironmentVariable("CLIENT_VER_UDP", EnvironmentVariableTarget.Process);
+        var clientName = TestUtils.GetEnvironmentVariable("CLIENT_NAME_UDP");
+        var sClientVer = TestUtils.GetEnvironmentVariable("CLIENT_VER_UDP");
 
-        Assert.NotNull(clientName);
-        Assert.NotNull(sClientVer);
         Assert.True(int.TryParse(sClientVer, out var clientVer));
-
         return new UdpApi(logger, new UdpClientWrapper(client), clientName!, clientVer);
     }
 

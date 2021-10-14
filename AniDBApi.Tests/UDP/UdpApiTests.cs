@@ -84,24 +84,47 @@ public class UdpApiTests
     public async Task TestUptime()
     {
         var api = SetupApi("UPTIME", "UPTIME.dat");
-        await using var authenticatedSession = new AuthenticatedSession(api, GetUserCredentials());
-        TestSession(authenticatedSession);
+        await using var authenticatedSession = await CreateSession(api);
 
         var res = await api.Uptime();
         TestResult(res, 208, "UPTIME", 1);
     }
 
+    [Fact]
+    public async Task TestEncryptionCycle()
+    {
+        var api = SetupApi(new Dictionary<string, string>
+        {
+            {"ENCRYPT", "ENCRYPT.dat"},
+            {"AUTH", "AUTH-encrypted.dat"},
+            {"UPTIME", "UPTIME-encrypted.dat"},
+            {"LOGOUT", "LOGOUT-encrypted.dat"}
+        }, false);
+
+        var username = TestUtils.IsCI ? "moq" : TestUtils.GetEnvironmentVariable("USERNAME");
+        var apiKey = TestUtils.IsCI ? "my-sexy-api-key" : TestUtils.GetEnvironmentVariable("APIKEY");
+
+        var encryptRes = await api.Encrypt(username, apiKey);
+        Assert.Equal(209, encryptRes.ReturnCode);
+
+        await using var authenticatedSession = await CreateSession(api);
+        var uptimeRes = await api.Uptime();
+        TestResult(uptimeRes, 208, "UPTIME", 1);
+    }
+
+    private static async Task<AuthenticatedSession> CreateSession(UdpApi api)
+    {
+        var (username, password) = GetUserCredentials();
+        var authenticatedSession = await AuthenticatedSession.CreateSession(api, username, password);
+        TestSession(authenticatedSession);
+        return authenticatedSession;
+    }
+
     private static (string, string) GetUserCredentials()
     {
-        if (TestUtils.IsCI) return ("moq", "moq");
-
-        var username = Environment.GetEnvironmentVariable("USERNAME", EnvironmentVariableTarget.Process);
-        var password = Environment.GetEnvironmentVariable("PASSWORD", EnvironmentVariableTarget.Process);
-
-        Assert.NotNull(username);
-        Assert.NotNull(password);
-
-        return (username!, password!);
+        return TestUtils.IsCI
+            ? ("moq", "moq")
+            : (TestUtils.GetEnvironmentVariable("USERNAME"), TestUtils.GetEnvironmentVariable("PASSWORD"));
     }
 
     private static void TestSession(AuthenticatedSession authenticatedSession)
