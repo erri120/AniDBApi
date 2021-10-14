@@ -21,7 +21,7 @@ namespace AniDBApi.UDP
         public ValueTask<int> SendAsync(ReadOnlyMemory<byte> datagram, CancellationToken cancellationToken = default)
             => _client.SendAsync(datagram, cancellationToken);
 
-        public ValueTask<UdpReceiveResult> ReceiveAsync(CancellationToken cancellationToken)
+        public ValueTask<UdpReceiveResult> ReceiveAsync(string commandName, CancellationToken cancellationToken)
             => _client.ReceiveAsync(cancellationToken);
     }
 }

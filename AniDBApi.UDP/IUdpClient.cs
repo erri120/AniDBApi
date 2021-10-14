@@ -11,5 +11,5 @@ public interface IUdpClient
 {
     void Connect(string hostname, int port);
     ValueTask<int> SendAsync(ReadOnlyMemory<byte> datagram, CancellationToken cancellationToken = default);
-    ValueTask<UdpReceiveResult> ReceiveAsync(CancellationToken cancellationToken);
+    ValueTask<UdpReceiveResult> ReceiveAsync(string commandName, CancellationToken cancellationToken);
 }
