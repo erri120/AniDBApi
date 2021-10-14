@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -46,6 +47,9 @@ namespace AniDBApi.UDP
 
         public async Task<UdpApiResult> Auth(string username, string password, CancellationToken cancellationToken = default)
         {
+            if (IsAuthenticated)
+                return UdpApiResult.CreateInternalError(_logger, "User is already authenticated!");
+
             //AUTH user={str username}&pass={str password}&protover={int4 apiversion}&client={str clientname}&clientver={int4 clientversion}[&nat=1&comp=1&enc={str encoding}&mtu={int4 mtu value}&imgserver=1]
             var commandString = CreateCommandString("AUTH", false,
                 $"user={username}",
@@ -63,6 +67,10 @@ namespace AniDBApi.UDP
                 var returnString = result.ReturnString;
                 _sessionKey = returnString[..returnString.IndexOf(' ')];
             }
+            else
+            {
+                _logger.LogError("Authentication failed with code {ErrorCode}: {Message}", result.ReturnCode.ToString(), result.ReturnString);
+            }
 
             return result;
         }
@@ -70,7 +78,7 @@ namespace AniDBApi.UDP
         public async Task<UdpApiResult> Logout(CancellationToken cancellationToken = default)
         {
             if (!IsAuthenticated)
-                return UdpApiResult.CreateInternalError(_logger, "Unable to logout because the user is not authenticated!");
+                return UdpApiResult.CreateInternalError(_logger, "User is not authenticated!");
 
             var commandString = CreateCommandString("LOGOUT", true);
             var result = await SendAndReceive("LOGOUT", commandString, cancellationToken);
@@ -80,8 +88,21 @@ namespace AniDBApi.UDP
                 IsAuthenticated = false;
                 _sessionKey = null;
             }
+            else
+            {
+                _logger.LogError("Failed to logout with code {ErrorCode}: {Message}", result.ReturnCode.ToString(), result.ReturnString);
+            }
 
             return result;
+        }
+
+        public async Task<UdpApiResult> Uptime(CancellationToken cancellationToken = default)
+        {
+            if (!IsAuthenticated)
+                return UdpApiResult.CreateInternalError(_logger, "Command UPTIME requires a session!");
+
+            var commandString = CreateCommandString("UPTIME", true);
+            return await SendAndReceive("UPTIME", commandString, cancellationToken);
         }
 
         private async Task<UdpApiResult> SendAndReceive(string commandName, string commandString, CancellationToken cancellationToken)
@@ -97,7 +118,9 @@ namespace AniDBApi.UDP
                 return UdpApiResult.CreateInternalError(_logger, $"Unable to send entire Command, only {length.ToString()} bytes out of {bytes.Length.ToString()} have been sent");
 
             var result = await _client.ReceiveAsync(commandName, cancellationToken);
-            //await File.WriteAllBytesAsync($"{commandName}.dat", result.Buffer, cancellationToken);
+
+            // TODO: find a better solution
+            await File.WriteAllBytesAsync($"{commandName}.dat", result.Buffer, cancellationToken);
             return CreateResult(result.Buffer);
         }
 
@@ -112,7 +135,11 @@ namespace AniDBApi.UDP
             }
 
             if (requiresSessionKey)
+            {
+                if (!IsAuthenticated || _sessionKey == null)
+                    throw new NotImplementedException();
                 sb.Append(parameters.Any() ? $"&s={_sessionKey}" : $"s={_sessionKey}");
+            }
 
             return sb.ToString();
         }
