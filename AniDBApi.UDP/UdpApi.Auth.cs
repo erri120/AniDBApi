@@ -73,6 +73,7 @@ namespace AniDBApi.UDP
                 _logger.LogInformation("User successfully logged out");
                 IsAuthenticated = false;
                 _sessionKey = null;
+                DataEncoding = Encoding.ASCII;
 
                 IsEncrypted = false;
                 _encryptionKey = null;
