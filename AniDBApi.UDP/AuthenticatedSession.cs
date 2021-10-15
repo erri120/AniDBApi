@@ -8,14 +8,14 @@ namespace AniDBApi.UDP
     [PublicAPI]
     public class AuthenticatedSession : IDisposable, IAsyncDisposable
     {
-        private readonly UdpApi _api;
+        private protected readonly UdpApi API;
 
-        public UdpApiResult? AuthResult { get; private set; }
-        public bool IsActive => _api.IsAuthenticated;
+        public UdpApiResult? AuthResult { get; private protected set; }
+        public virtual bool IsActive => API.IsAuthenticated;
 
         internal AuthenticatedSession(UdpApi api)
         {
-            _api = api;
+            API = api;
         }
 
         public static async Task<AuthenticatedSession> CreateSession(UdpApi api, string username, string password, CancellationToken cancellationToken = default)
@@ -28,20 +28,20 @@ namespace AniDBApi.UDP
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            if (_api.IsAuthenticated)
+            if (IsActive)
             {
                 // TODO: maybe do something with this
-                var res = _api.Logout().Result;
+                var res = API.Logout().Result;
             }
         }
 
         public async ValueTask DisposeAsync()
         {
             GC.SuppressFinalize(this);
-            if (_api.IsAuthenticated)
+            if (IsActive)
             {
                 // TODO: maybe do something with this
-                var res = await _api.Logout().ConfigureAwait(false);
+                var res = await API.Logout().ConfigureAwait(false);
             }
         }
     }
