@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 namespace AniDBApi.UDP
 {
     [PublicAPI]
-    public class UdpApi
+    public partial class UdpApi
     {
         private readonly RateLimiter _rateLimiter = new(TimeSpan.FromSeconds(3));
 
@@ -42,106 +42,6 @@ namespace AniDBApi.UDP
             _clientVer = clientVer;
 
             _client.Connect(server, port);
-        }
-
-        public Task<UdpApiResult> Ping(CancellationToken cancellationToken = default)
-            => SendAndReceive("PING", "PING", cancellationToken);
-
-        public Task<UdpApiResult> Version(CancellationToken cancellationToken = default)
-            => SendAndReceive("VERSION", "VERSION", cancellationToken);
-
-        public async Task<UdpApiResult> Encrypt(string username, string apiKey, CancellationToken cancellationToken = default)
-        {
-            if (IsEncrypted)
-                return UdpApiResult.CreateInternalError(_logger, "Session is already encrypted!");
-
-            var commandString = CreateCommandString("ENCRYPT", false,
-                $"user={username}", "type=1");
-
-            var result = await SendAndReceive("ENCRYPT", commandString, cancellationToken);
-            if (result.ReturnCode is 209)
-            {
-                _logger.LogInformation("Encryption enabled");
-                IsEncrypted = true;
-                var salt = GetStringAfterReturnCode(result);
-                _encryptionKey = CreateEncryptionKey(apiKey, salt);
-            }
-            else
-            {
-                _logger.LogError("Encryption failed with code {ErrorCode}: {Message}", result.ReturnCode.ToString(), result.ReturnString);
-            }
-
-            return result;
-        }
-
-        public async Task<UdpApiResult> Auth(string username, string password, CancellationToken cancellationToken = default)
-        {
-            if (IsAuthenticated)
-                return UdpApiResult.CreateInternalError(_logger, "User is already authenticated!");
-
-            //AUTH user={str username}&pass={str password}&protover={int4 apiversion}&client={str clientname}&clientver={int4 clientversion}[&nat=1&comp=1&enc={str encoding}&mtu={int4 mtu value}&imgserver=1]
-            var commandString = CreateCommandString("AUTH", false,
-                $"user={username}",
-                $"pass={password}",
-                $"protover={ProtoVer.ToString()}",
-                $"client={_clientName}",
-                $"clientver={_clientVer.ToString()}");
-
-            var result = await SendAndReceive("AUTH", commandString, cancellationToken);
-            if (result.ReturnCode is 200 or 201)
-            {
-                _logger.LogInformation("User successfully authenticated");
-                IsAuthenticated = true;
-                _sessionKey = GetStringAfterReturnCode(result);
-            }
-            else
-            {
-                _logger.LogError("Authentication failed with code {ErrorCode}: {Message}", result.ReturnCode.ToString(), result.ReturnString);
-            }
-
-            return result;
-        }
-
-        public async Task<UdpApiResult> Logout(CancellationToken cancellationToken = default)
-        {
-            if (!IsAuthenticated)
-                return UdpApiResult.CreateMissingSessionError(_logger, "LOGOUT");
-
-            var commandString = CreateCommandString("LOGOUT", true);
-            var result = await SendAndReceive("LOGOUT", commandString, cancellationToken);
-            if (result.ReturnCode == 203)
-            {
-                _logger.LogInformation("User successfully logged out");
-                IsAuthenticated = false;
-                _sessionKey = null;
-
-                IsEncrypted = false;
-                _encryptionKey = null;
-            }
-            else
-            {
-                _logger.LogError("Failed to logout with code {ErrorCode}: {Message}", result.ReturnCode.ToString(), result.ReturnString);
-            }
-
-            return result;
-        }
-
-        public async Task<UdpApiResult> Uptime(CancellationToken cancellationToken = default)
-        {
-            if (!IsAuthenticated)
-                return UdpApiResult.CreateMissingSessionError(_logger, "UPTIME");
-
-            var commandString = CreateCommandString("UPTIME", true);
-            return await SendAndReceive("UPTIME", commandString, cancellationToken);
-        }
-
-        public async Task<UdpApiResult> User(string user, CancellationToken cancellationToken = default)
-        {
-            if (!IsAuthenticated)
-                return UdpApiResult.CreateMissingSessionError(_logger, "USER");
-
-            var commandString = CreateCommandString("USER", true, $"user={user}");
-            return await SendAndReceive("USER", commandString, cancellationToken);
         }
 
         private async Task<UdpApiResult> SendAndReceive(string commandName, string commandString, CancellationToken cancellationToken)
