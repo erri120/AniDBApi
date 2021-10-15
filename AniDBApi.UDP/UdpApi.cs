@@ -26,6 +26,8 @@ namespace AniDBApi.UDP
         private readonly string _clientName;
         private readonly int _clientVer;
 
+        public TimeSpan ReceiveTimeout { get; set; } = TimeSpan.FromSeconds(10);
+
         public Encoding DataEncoding { get; private set; } = Encoding.ASCII;
         public bool IsAuthenticated { get; private set; }
         public bool IsEncrypted { get; private set; }
@@ -65,7 +67,10 @@ namespace AniDBApi.UDP
             if (length != bytes.Length)
                 return UdpApiResult.CreateInternalError(_logger, $"Unable to send entire Command, only {length.ToString()} bytes out of {bytes.Length.ToString()} have been sent");
 
-            var result = await _client.ReceiveAsync(commandName, cancellationToken);
+            var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            cts.CancelAfter(ReceiveTimeout);
+
+            var result = await _client.ReceiveAsync(commandName, cts.Token);
 
             var resultBytes = result.Buffer;
             if (_encryptionKey != null && IsEncrypted)
@@ -106,17 +111,19 @@ namespace AniDBApi.UDP
             var sb = new StringBuilder(commandName);
             sb.Append(' ');
 
+            var first = true;
             foreach (var parameter in parameters)
             {
                 if (parameter == null) continue;
-                sb.Append($"&{parameter}");
+                sb.Append(first ? $"{parameter}" : $"&{parameter}");
+                if (first) first = false;
             }
 
             if (requiresSessionKey)
             {
                 if (!IsAuthenticated || _sessionKey == null)
                     throw new NotImplementedException();
-                sb.Append($"&s={_sessionKey}");
+                sb.Append(first ? $"s={_sessionKey}" : $"&s={_sessionKey}");
             }
 
             return sb.ToString();

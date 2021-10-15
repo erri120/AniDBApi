@@ -67,13 +67,19 @@ public class UdpApiTests
     [Fact]
     public async Task TestAuthCycle()
     {
-        var api = SetupApi(new Dictionary<string, string>());
+        var api = SetupApi(new Dictionary<string, string>
+        {
+            {"UPTIME", "UPTIME.dat"}
+        });
 
         var (username, password) = GetUserCredentials();
-        var authResult = await api.Auth(username, password);
 
+        var authResult = await api.Auth(username, password);
         Assert.Equal(200, authResult.ReturnCode);
         Assert.True(api.IsAuthenticated);
+
+        var uptimeRes = await api.Uptime();
+        TestResult(uptimeRes, 208, "UPTIME", 1);
 
         var logoutResult = await api.Logout();
         TestResult(logoutResult, 203, "LOGGED OUT");
@@ -123,6 +129,40 @@ public class UdpApiTests
         Assert.Equal("943810", res.Lines[0][0]);
         Assert.Equal("erri120", res.Lines[0][1]);
     }
+
+    [Fact]
+    public async Task TestAnimeWithId()
+    {
+        var api = SetupApi("ANIME", "ANIME.dat");
+        await using var session = await CreateSession(api);
+
+        var res = await api.Anime(10816);
+        TestResult(res, 230, "ANIME", 1);
+        Assert.Equal("10816", res.Lines[0][0]);
+    }
+
+    [Fact]
+    public async Task TestAnimeWithName()
+    {
+        var api = SetupApi("ANIME", "ANIME.dat");
+        await using var session = await CreateSession(api);
+
+        var res = await api.Anime("Overlord");
+        TestResult(res, 230, "ANIME", 1);
+        Assert.Equal("10816", res.Lines[0][0]);
+    }
+
+    /*[Fact]
+    public async Task TestAnimeWithMask()
+    {
+        var mask = (AnimeMask)0xb2f0e0fc000000;
+
+        var api = SetupApi("ANIME", "ANIME-mask.dat");
+        await using var session = await CreateSession(api);
+
+        var res = await api.Anime(10816, mask);
+        TestResult(res, 230, "ANIME", 1);
+    }*/
 
     private static async Task<AuthenticatedSession> CreateSession(UdpApi api)
     {
