@@ -27,6 +27,11 @@ namespace AniDBApi.UDP
             return res;
         }
 
+        internal static UdpApiResult CreateMissingSessionError(ILogger logger, string commandName)
+        {
+            return CreateInternalError(logger, $"Command {commandName} requires a session!");
+        }
+
         public override string ToString()
         {
             return InternalLines.Any()

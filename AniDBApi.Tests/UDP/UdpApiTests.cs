@@ -112,6 +112,18 @@ public class UdpApiTests
         TestResult(uptimeRes, 208, "UPTIME", 1);
     }
 
+    [Fact]
+    public async Task TestUser()
+    {
+        var api = SetupApi("USER", "USER.dat");
+        await using var session = await CreateSession(api);
+
+        var res = await api.User("erri120");
+        TestResult(res, 295, "USER", 1);
+        Assert.Equal("943810", res.Lines[0][0]);
+        Assert.Equal("erri120", res.Lines[0][1]);
+    }
+
     private static async Task<AuthenticatedSession> CreateSession(UdpApi api)
     {
         var (username, password) = GetUserCredentials();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -104,7 +105,7 @@ namespace AniDBApi.UDP
         public async Task<UdpApiResult> Logout(CancellationToken cancellationToken = default)
         {
             if (!IsAuthenticated)
-                return UdpApiResult.CreateInternalError(_logger, "User is not authenticated!");
+                return UdpApiResult.CreateMissingSessionError(_logger, "LOGOUT");
 
             var commandString = CreateCommandString("LOGOUT", true);
             var result = await SendAndReceive("LOGOUT", commandString, cancellationToken);
@@ -128,10 +129,19 @@ namespace AniDBApi.UDP
         public async Task<UdpApiResult> Uptime(CancellationToken cancellationToken = default)
         {
             if (!IsAuthenticated)
-                return UdpApiResult.CreateInternalError(_logger, "Command UPTIME requires a session!");
+                return UdpApiResult.CreateMissingSessionError(_logger, "UPTIME");
 
             var commandString = CreateCommandString("UPTIME", true);
             return await SendAndReceive("UPTIME", commandString, cancellationToken);
+        }
+
+        public async Task<UdpApiResult> User(string user, CancellationToken cancellationToken = default)
+        {
+            if (!IsAuthenticated)
+                return UdpApiResult.CreateMissingSessionError(_logger, "USER");
+
+            var commandString = CreateCommandString("USER", true, $"user={user}");
+            return await SendAndReceive("USER", commandString, cancellationToken);
         }
 
         private async Task<UdpApiResult> SendAndReceive(string commandName, string commandString, CancellationToken cancellationToken)
@@ -190,13 +200,14 @@ namespace AniDBApi.UDP
             return returnString[..returnString.IndexOf(' ')];
         }
 
-        private string CreateCommandString(string commandName, bool requiresSessionKey, params string[] parameters)
+        private string CreateCommandString(string commandName, bool requiresSessionKey, IEnumerable<string?> parameters)
         {
             var sb = new StringBuilder(commandName);
             sb.Append(' ');
 
             foreach (var parameter in parameters)
             {
+                if (parameter == null) continue;
                 sb.Append($"&{parameter}");
             }
 
@@ -204,10 +215,15 @@ namespace AniDBApi.UDP
             {
                 if (!IsAuthenticated || _sessionKey == null)
                     throw new NotImplementedException();
-                sb.Append(parameters.Any() ? $"&s={_sessionKey}" : $"s={_sessionKey}");
+                sb.Append($"&s={_sessionKey}");
             }
 
             return sb.ToString();
+        }
+
+        private string CreateCommandString(string commandName, bool requiresSessionKey, params string?[] parameters)
+        {
+            return CreateCommandString(commandName, requiresSessionKey, (IEnumerable<string?>) parameters);
         }
 
         // TODO: internal
