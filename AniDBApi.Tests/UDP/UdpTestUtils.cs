@@ -18,7 +18,7 @@ public static class UdpTestUtils
     {
         Assert.False(TestUtils.IsCI);
 
-        var client = new UdpClient();
+        var client = new UdpClient(9468);
 
         var clientName = TestUtils.GetEnvironmentVariable("CLIENT_NAME_UDP");
         var sClientVer = TestUtils.GetEnvironmentVariable("CLIENT_VER_UDP");
