@@ -164,6 +164,17 @@ public class UdpApiTests
         TestResult(res, 230, "ANIME", 1);
     }*/
 
+    [Fact]
+    public async Task TestAnimeDesc()
+    {
+        var api = SetupApi("ANIMEDESC", "ANIMEDESC.dat");
+        await using var session = await CreateSession(api);
+
+        var res = await api.AnimeDesc(22, 0);
+        TestResult(res, 233, "ANIMEDESC", 1);
+        Assert.Equal("0", res.Lines[0][0]);
+    }
+
     private static async Task<AuthenticatedSession> CreateSession(UdpApi api)
     {
         var (username, password) = GetUserCredentials();
