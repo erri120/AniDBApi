@@ -15,7 +15,7 @@ namespace AniDBApi.UDP
     [PublicAPI]
     public partial class UdpApi
     {
-        private readonly RateLimiter _rateLimiter = new(TimeSpan.FromSeconds(3));
+        private readonly RateLimiter _rateLimiter = new(TimeSpan.FromSeconds(4));
 
         private const string DefaultServer = "api.anidb.net";
         private const int DefaultPort = 9000;
@@ -26,6 +26,7 @@ namespace AniDBApi.UDP
         private readonly string _clientName;
         private readonly int _clientVer;
 
+        public Encoding DataEncoding { get; private set; } = Encoding.ASCII;
         public bool IsAuthenticated { get; private set; }
         public bool IsEncrypted { get; private set; }
 
@@ -49,7 +50,7 @@ namespace AniDBApi.UDP
             _logger.LogInformation("Sending Command {CommandName}", commandName);
             await _rateLimiter.Trigger(cancellationToken);
 
-            var bytes = Encoding.ASCII.GetBytes(commandString);
+            var bytes = DataEncoding.GetBytes(commandString);
             if (_encryptionKey != null && IsEncrypted)
             {
                 using var aes = Aes.Create();
@@ -81,10 +82,10 @@ namespace AniDBApi.UDP
             return CreateResult(resultBytes);
         }
 
-        private static byte[] CreateEncryptionKey(string apiKey, string salt)
+        private byte[] CreateEncryptionKey(string apiKey, string salt)
         {
             var concat = apiKey + salt;
-            var bytes = Encoding.ASCII.GetBytes(concat);
+            var bytes = DataEncoding.GetBytes(concat);
 
             var hash = new byte[16];
             var count = MD5.HashData(new ReadOnlySpan<byte>(bytes, 0, bytes.Length), new Span<byte>(hash, 0, hash.Length));
@@ -132,10 +133,10 @@ namespace AniDBApi.UDP
             //"300 PONG\n"
 
             var bytes = new ReadOnlySpan<byte>(resultBytes, 0, resultBytes.Length);
-            var charCount = Encoding.ASCII.GetCharCount(bytes);
+            var charCount = DataEncoding.GetCharCount(bytes);
             Span<char> chars = stackalloc char[charCount];
 
-            var actualCount = Encoding.ASCII.GetChars(bytes, chars);
+            var actualCount = DataEncoding.GetChars(bytes, chars);
             if (actualCount != charCount)
                 return UdpApiResult.CreateInternalError(_logger, $"Number of decoded bytes does not match expected amount: {actualCount.ToString()} != {charCount.ToString()}");
 

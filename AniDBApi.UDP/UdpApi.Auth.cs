@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -41,7 +42,8 @@ namespace AniDBApi.UDP
                 $"pass={password}",
                 $"protover={ProtoVer.ToString()}",
                 $"client={_clientName}",
-                $"clientver={_clientVer.ToString()}");
+                $"clientver={_clientVer.ToString()}",
+                "enc=UTF8");
 
             var result = await SendAndReceive("AUTH", commandString, cancellationToken);
             if (result.ReturnCode is 200 or 201)
@@ -49,6 +51,7 @@ namespace AniDBApi.UDP
                 _logger.LogInformation("User successfully authenticated");
                 IsAuthenticated = true;
                 _sessionKey = GetStringAfterReturnCode(result);
+                DataEncoding = new UTF8Encoding(false);
             }
             else
             {
