@@ -169,6 +169,7 @@ namespace AniDBApi.UDP
             var nextLineSlice = span.Slice(lineFeedIndex + 1, span.Length - lineFeedIndex - 1);
             lineFeedIndex = nextLineSlice.IndexOf('\n');
 
+            // we keep splitting nextLineSlice until the end
             while (lineFeedIndex != -1)
             {
                 consumedChars += lineFeedIndex + 1;
@@ -179,7 +180,7 @@ namespace AniDBApi.UDP
 
                 if (consumedChars == span.Length) break;
 
-                nextLineSlice = span.Slice(lineFeedIndex + 1, span.Length - lineFeedIndex - 1);
+                nextLineSlice = nextLineSlice.Slice(lineFeedIndex + 1, nextLineSlice.Length - lineFeedIndex - 1);
                 lineFeedIndex = nextLineSlice.IndexOf('\n');
             }
 
