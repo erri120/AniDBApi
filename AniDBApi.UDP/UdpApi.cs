@@ -53,6 +53,15 @@ namespace AniDBApi.UDP
             _client.Connect(server, port);
         }
 
+        private async Task<UdpApiResult> CreateCommand(string commandName, CancellationToken cancellationToken, params string[] parameters)
+        {
+            if (!IsAuthenticated)
+                return UdpApiResult.CreateMissingSessionError(_logger, commandName);
+
+            var commandString = CreateCommandString(commandName, true, parameters);
+            return await SendAndReceive(commandName, commandString, cancellationToken);
+        }
+
         private async Task<UdpApiResult> SendAndReceive(string commandName, string commandString, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Sending Command {CommandName}", commandName);

@@ -226,6 +226,45 @@ public class UdpApiTests
             res => Assert.Equal("666", res.Lines[0][0]));
     }
 
+    [Fact]
+    public Task TestEpisodeWithId()
+    {
+        return TestSimpleCommand(
+            "EPISODE",
+            null,
+            api => api.Episode(235753),
+            240,
+            null,
+            1,
+            res => Assert.Equal("235753", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestEpisodeWithAnimeId()
+    {
+        return TestSimpleCommand(
+            "EPISODE",
+            null,
+            api => api.Episode(14977, 5),
+            240,
+            null,
+            1,
+            res => Assert.Equal("235753", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestEpisodeWithAnimeName()
+    {
+        return TestSimpleCommand(
+            "EPISODE",
+            null,
+            api => api.Episode("Attack on Titan The Final Season", 5),
+            240,
+            null,
+            1,
+            res => Assert.Equal("235753", res.Lines[0][0]));
+    }
+
     private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
     {

@@ -50,41 +50,26 @@ namespace AniDBApi.UDP
             return await SendAndReceive("ANIME", commandString, cancellationToken);
         }
 
-        public async Task<UdpApiResult> AnimeDesc(int id, int part, CancellationToken cancellationToken = default)
-        {
-            if (!IsAuthenticated)
-                return UdpApiResult.CreateMissingSessionError(_logger, "ANIMEDESC");
+        public Task<UdpApiResult> AnimeDesc(int id, int part, CancellationToken cancellationToken = default)
+            => CreateCommand("ANIMEDESC", cancellationToken, $"aid={id.ToString()}", $"part={part.ToString()}");
 
-            var commandString = CreateCommandString("ANIMEDESC", true, $"aid={id.ToString()}", $"part={part.ToString()}");
-            return await SendAndReceive("ANIMEDESC", commandString, cancellationToken);
-        }
+        public Task<UdpApiResult> Calendar(CancellationToken cancellationToken = default)
+            => CreateCommand("CALENDAR", cancellationToken);
 
-        public async Task<UdpApiResult> Calendar(CancellationToken cancellationToken = default)
-        {
-            if (!IsAuthenticated)
-                return UdpApiResult.CreateMissingSessionError(_logger, "CALENDAR");
+        public Task<UdpApiResult> Character(int characterId, CancellationToken cancellationToken = default)
+            => CreateCommand("CHARACTER", cancellationToken, $"charid={characterId.ToString()}");
 
-            var commandString = CreateCommandString("CALENDAR", true);
-            return await SendAndReceive("CALENDAR", commandString, cancellationToken);
-        }
+        public Task<UdpApiResult> Creator(int creatorId, CancellationToken cancellationToken = default)
+            => CreateCommand("CREATOR", cancellationToken, $"creatorid={creatorId.ToString()}");
 
-        public async Task<UdpApiResult> Character(int characterId, CancellationToken cancellationToken = default)
-        {
-            if (!IsAuthenticated)
-                return UdpApiResult.CreateMissingSessionError(_logger, "CHARACTER");
+        public Task<UdpApiResult> Episode(int episodeId, CancellationToken cancellationToken = default)
+            => CreateCommand("EPISODE", cancellationToken, $"eid={episodeId.ToString()}");
 
-            var commandString = CreateCommandString("CHARACTER", true, $"charid={characterId.ToString()}");
-            return await SendAndReceive("CHARACTER", commandString, cancellationToken);
-        }
+        public Task<UdpApiResult> Episode(string animeName, int episodeNumber, CancellationToken cancellationToken = default)
+            => CreateCommand("EPISODE", cancellationToken, $"aname={animeName}", $"epno={episodeNumber.ToString()}");
 
-        public async Task<UdpApiResult> Creator(int creatorId, CancellationToken cancellationToken = default)
-        {
-            if (!IsAuthenticated)
-                return UdpApiResult.CreateMissingSessionError(_logger, "CREATOR");
-
-            var commandString = CreateCommandString("CREATOR", true, $"creatorid={creatorId.ToString()}");
-            return await SendAndReceive("CREATOR", commandString, cancellationToken);
-        }
+        public Task<UdpApiResult> Episode(int animeId, int episodeNumber, CancellationToken cancellationToken = default)
+            => CreateCommand("EPISODE", cancellationToken, $"aid={animeId.ToString()}", $"epno={episodeNumber.ToString()}");
     }
 
     // TODO: API Definition https://wiki.anidb.net/UDP_API_Definition#ANIME:_Retrieve_Anime_Data is outdated and mask values are wrong
