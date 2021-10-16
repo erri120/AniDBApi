@@ -15,7 +15,7 @@ namespace AniDBApi.UDP
     [PublicAPI]
     public partial class UdpApi
     {
-        private readonly RateLimiter _rateLimiter = new(TimeSpan.FromSeconds(4));
+        private readonly RateLimiter _rateLimiter;
 
         private const string DefaultServer = "api.anidb.net";
         private const int DefaultPort = 9000;
@@ -37,7 +37,13 @@ namespace AniDBApi.UDP
 
         public UdpApi(ILogger<UdpApi> logger, IUdpClient client, string clientName, int clientVer,
             string server = DefaultServer, int port = DefaultPort)
+            : this(logger, client, clientName, clientVer, TimeSpan.FromSeconds(4), server, port) { }
+
+        internal UdpApi(ILogger<UdpApi> logger, IUdpClient client, string clientName, int clientVer, TimeSpan rateLimiterInterval,
+            string server = DefaultServer, int port = DefaultPort)
         {
+            _rateLimiter = new RateLimiter(rateLimiterInterval);
+
             _logger = logger;
             _client = client;
             // TODO: name and version validation
@@ -134,8 +140,7 @@ namespace AniDBApi.UDP
             return CreateCommandString(commandName, requiresSessionKey, (IEnumerable<string?>) parameters);
         }
 
-        // TODO: internal
-        public UdpApiResult CreateResult(byte[] resultBytes)
+        internal UdpApiResult CreateResult(byte[] resultBytes)
         {
             //"300 PONG\n"
 

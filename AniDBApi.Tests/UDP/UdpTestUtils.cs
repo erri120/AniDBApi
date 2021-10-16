@@ -45,6 +45,6 @@ public static class UdpTestUtils
                         new IPEndPoint(0x2414188f, 1)));
             });
 
-        return new UdpApi(logger, client.Object, "moq", 1, "testing.com", -1);
+        return new UdpApi(logger, client.Object, "moq", 1, TimeSpan.FromMilliseconds(100), "testing.com", -1);
     }
 }

@@ -87,16 +87,6 @@ public class UdpApiTests
     }
 
     [Fact]
-    public async Task TestUptime()
-    {
-        var api = SetupApi("UPTIME", "UPTIME.dat");
-        await using var authenticatedSession = await CreateSession(api);
-
-        var res = await api.Uptime();
-        TestResult(res, 208, "UPTIME", 1);
-    }
-
-    [Fact]
     public async Task TestEncryptionCycle()
     {
         var api = SetupApi(new Dictionary<string, string>
@@ -119,37 +109,58 @@ public class UdpApiTests
     }
 
     [Fact]
-    public async Task TestUser()
+    public Task TestUptime()
     {
-        var api = SetupApi("USER", "USER.dat");
-        await using var session = await CreateSession(api);
-
-        var res = await api.User("erri120");
-        TestResult(res, 295, "USER", 1);
-        Assert.Equal("943810", res.Lines[0][0]);
-        Assert.Equal("erri120", res.Lines[0][1]);
+        return TestSimpleCommand(
+            "UPTIME",
+            null,
+            api => api.Uptime(),
+            208,
+            null,
+            1);
     }
 
     [Fact]
-    public async Task TestAnimeWithId()
+    public Task TestUser()
     {
-        var api = SetupApi("ANIME", "ANIME.dat");
-        await using var session = await CreateSession(api);
-
-        var res = await api.Anime(10816);
-        TestResult(res, 230, "ANIME", 1);
-        Assert.Equal("10816", res.Lines[0][0]);
+        return TestSimpleCommand(
+            "USER",
+            null,
+            api => api.User("erri120"),
+            295,
+            null,
+            1,
+            res =>
+            {
+                Assert.Equal("943810", res.Lines[0][0]);
+                Assert.Equal("erri120", res.Lines[0][1]);
+            });
     }
 
     [Fact]
-    public async Task TestAnimeWithName()
+    public Task TestAnimeWithId()
     {
-        var api = SetupApi("ANIME", "ANIME.dat");
-        await using var session = await CreateSession(api);
+        return TestSimpleCommand(
+            "ANIME",
+            null,
+            api => api.Anime(10816),
+            230,
+            null,
+            1,
+            res => Assert.Equal("10816", res.Lines[0][0]));
+    }
 
-        var res = await api.Anime("Overlord");
-        TestResult(res, 230, "ANIME", 1);
-        Assert.Equal("10816", res.Lines[0][0]);
+    [Fact]
+    public Task TestAnimeWithName()
+    {
+        return TestSimpleCommand(
+            "ANIME",
+            null,
+            api => api.Anime("Overlord"),
+            230,
+            null,
+            1,
+            res => Assert.Equal("10816", res.Lines[0][0]));
     }
 
     /*[Fact]
@@ -165,46 +176,65 @@ public class UdpApiTests
     }*/
 
     [Fact]
-    public async Task TestAnimeDesc()
+    public Task TestAnimeDesc()
     {
-        var api = SetupApi("ANIMEDESC", "ANIMEDESC.dat");
-        await using var session = await CreateSession(api);
-
-        var res = await api.AnimeDesc(22, 0);
-        TestResult(res, 233, "ANIMEDESC", 1);
-        Assert.Equal("0", res.Lines[0][0]);
+        return TestSimpleCommand(
+            "ANIMEDESC",
+            null,
+            api => api.AnimeDesc(22, 0),
+            233,
+            null,
+            1,
+            res => Assert.Equal("0", res.Lines[0][0]));
     }
 
     [Fact]
-    public async Task TestCalendar()
+    public Task TestCalendar()
     {
-        var api = SetupApi("CALENDAR", "CALENDAR.dat");
-        await using var session = await CreateSession(api);
-
-        var res = await api.Calendar();
-        TestResult(res, 297, "CALENDAR", 50);
+        return TestSimpleCommand(
+            "CALENDAR",
+            null,
+            api => api.Calendar(),
+            297,
+            null,
+            50);
     }
 
     [Fact]
-    public async Task TestCharacter()
+    public Task TestCharacter()
     {
-        var api = SetupApi("CHARACTER", "CHARACTER.dat");
-        await using var session = await CreateSession(api);
-
-        var res = await api.Character(1905);
-        TestResult(res, 235, "CHARACTER", 1);
-        Assert.Equal("1905", res.Lines[0][0]);
+        return TestSimpleCommand(
+            "CHARACTER",
+            null,
+            api => api.Character(1905),
+            235,
+            null,
+            1,
+            res => Assert.Equal("1905", res.Lines[0][0]));
     }
 
     [Fact]
-    public async Task TestCreator()
+    public Task TestCreator()
     {
-        var api = SetupApi("CREATOR", "CREATOR.dat");
+        return TestSimpleCommand(
+            "CREATOR",
+            null,
+            api => api.Creator(666),
+            245,
+            null,
+            1,
+            res => Assert.Equal("666", res.Lines[0][0]));
+    }
+
+    private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
+        int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
+    {
+        var api = SetupApi(commandName, resultFile ?? $"{commandName}.dat");
         await using var session = await CreateSession(api);
 
-        var res = await api.Creator(666);
-        TestResult(res, 245, "CREATOR", 1);
-        Assert.Equal("666", res.Lines[0][0]);
+        var res = await func(api);
+        TestResult(res, returnCode, returnString ?? commandName, lineCount);
+        action?.Invoke(res);
     }
 
     private static async Task<AuthenticatedSession> CreateSession(UdpApi api)
