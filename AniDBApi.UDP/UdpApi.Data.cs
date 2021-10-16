@@ -67,6 +67,15 @@ namespace AniDBApi.UDP
             var commandString = CreateCommandString("CALENDAR", true);
             return await SendAndReceive("CALENDAR", commandString, cancellationToken);
         }
+
+        public async Task<UdpApiResult> Character(int characterId, CancellationToken cancellationToken = default)
+        {
+            if (!IsAuthenticated)
+                return UdpApiResult.CreateMissingSessionError(_logger, "CHARACTER");
+
+            var commandString = CreateCommandString("CHARACTER", true, $"charid={characterId.ToString()}");
+            return await SendAndReceive("CHARACTER", commandString, cancellationToken);
+        }
     }
 
     // TODO: API Definition https://wiki.anidb.net/UDP_API_Definition#ANIME:_Retrieve_Anime_Data is outdated and mask values are wrong

@@ -185,6 +185,17 @@ public class UdpApiTests
         TestResult(res, 297, "CALENDAR", 50);
     }
 
+    [Fact]
+    public async Task TestCharacter()
+    {
+        var api = SetupApi("CHARACTER", "CHARACTER.dat");
+        await using var session = await CreateSession(api);
+
+        var res = await api.Character(1905);
+        TestResult(res, 235, "CHARACTER", 1);
+        Assert.Equal("1905", res.Lines[0][0]);
+    }
+
     private static async Task<AuthenticatedSession> CreateSession(UdpApi api)
     {
         var (username, password) = GetUserCredentials();
