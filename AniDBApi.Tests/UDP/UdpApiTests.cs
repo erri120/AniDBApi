@@ -265,6 +265,19 @@ public class UdpApiTests
             res => Assert.Equal("235753", res.Lines[0][0]));
     }
 
+    [Fact]
+    public Task TestFileWithId()
+    {
+        return TestSimpleCommand(
+            "FILE",
+            null,
+            api => api.File(2683771, FileMask.Ed2k),
+            220,
+            null,
+            1,
+            res => Assert.Equal("2683771", res.Lines[0][0]));
+    }
+
     private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
     {
@@ -293,11 +306,16 @@ public class UdpApiTests
 
     private static void TestSession(AuthenticatedSession authenticatedSession)
     {
-        Assert.True(authenticatedSession.IsActive);
+        Assert.True(authenticatedSession.IsActive,
+            "Authentication failed: " +
+            $"{authenticatedSession.AuthResult?.ReturnCode.ToString()} " +
+            $"{authenticatedSession.AuthResult?.ReturnString}");
     }
 
     private static void TestResult(UdpApiResult result, int returnCode, string returnString, int lineCount = 0)
     {
+        Assert.False(result.ReturnCode == 555, $"{result.ReturnString}: {result.Lines[0][0]}");
+
         Assert.Equal(returnCode, result.ReturnCode);
         Assert.Equal(returnString, result.ReturnString);
         Assert.Equal(lineCount, result.Lines.Count);

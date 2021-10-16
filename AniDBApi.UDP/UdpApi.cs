@@ -98,7 +98,7 @@ namespace AniDBApi.UDP
             }
 
             // TODO: find a better solution
-            await File.WriteAllBytesAsync($"{commandName}.dat", resultBytes, cancellationToken);
+            await System.IO.File.WriteAllBytesAsync($"{commandName}.dat", resultBytes, cancellationToken);
             return CreateResult(resultBytes);
         }
 
