@@ -33,4 +33,52 @@ The interface [`AniDBApi.IHttpApi`](AniDBApi/IHttpApi.cs) is implemented by [Htt
 
 ## UDP
 
-TODO
+Commands implemented from the [docs](https://wiki.anidb.net/UDP_API_Definition):
+
+- Authing Commands:
+  - [x] `AUTH`: encoding is set to UTF-8
+  - [x] `LOGOUT`: you actually can't logout when you get banned after the login, the API will return nothing and will time out
+  - [x] `ENCRYPT`: authentication is a joke in this API, without this command you have to transmit your username and password as clear text, highly recommend you always use an encrypted session even if the docs says you should not "In order to minimize server load"...
+- Notify Commands:
+  - [ ] `PUSH`
+  - [ ] `NOTIFY`
+  - [ ] `NOTIFYLIST`
+  - [ ] `NOTIFYGET`
+  - [ ] `NOTIFYACK`
+  - [ ] `PUSHACK`
+- Notification Commands:
+  - [ ] `NOTIFICATIONADD`
+  - [ ] `NOTIFICATIONDEL`
+- Buddy Commands:
+  - [ ] `BUDDYADD`
+  - [ ] `BUDDYDEL`
+  - [ ] `BUDDYACCEPT`
+  - [ ] `BUDDYDENY`
+  - [ ] `BUDDYLIST`
+  - [ ] `BUDDYSTATE`
+- Data Commands:
+  - [x] `ANIME`: the `amask` from the docs is incomplete/outdated also searching by name is completely broken as well
+  - [x] `ANIMEDESC`
+  - [x] `CALENDAR`
+  - [x] `CHARACTER`
+  - [x] `CREATOR`
+  - [x] `EPISODE`
+  - [x] `FILE`: the server is very trigger happy when you use this command, I got banned while adding support for this...
+  - [x] `GROUP`
+  - [x] `GROUPSTATUS`
+  - [x] `UPDATED`
+- MyList Commands:
+  - [ ] `MYLIST`
+  - [ ] `MYLISTADD`
+  - [ ] `MYLISTDEL`
+  - [ ] `MYLISTSTATS`
+  - [ ] `VOTE`
+  - [ ] `RANDOM`
+- Misc Commands:
+  - [ ] `MYLISTEXPORT`
+  - [x] `PING`: does not require a session
+  - [x] `VERSION`: does not require a session
+  - [x] `UPTIME`: does not require a session
+  - [ ] `ENCODING`: will never be implemented, encoding is already set to UTF-8 in the `AUTH` Command
+  - [ ] `SENDMSG`
+  - [x] `USER`: does not require a session
