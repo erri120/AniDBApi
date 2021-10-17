@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AniDBApi.UDP;
 using Microsoft.Extensions.Logging;
@@ -314,7 +315,8 @@ public class UdpApiTests
 
     private static void TestResult(UdpApiResult result, int returnCode, string returnString, int lineCount = 0)
     {
-        Assert.False(result.ReturnCode == 555, $"{result.ReturnString}: {result.Lines[0][0]}");
+        var lines = result.Lines.SelectMany(x => x).ToList();
+        Assert.False(result.ReturnCode == 555, $"{result.ReturnString}: {(lines.Any() ? lines.Aggregate((a,b) => $"{a} {b}") : "")}");
 
         Assert.Equal(returnCode, result.ReturnCode);
         Assert.Equal(returnString, result.ReturnString);
