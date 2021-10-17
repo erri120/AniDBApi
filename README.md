@@ -50,12 +50,12 @@ Commands implemented from the [docs](https://wiki.anidb.net/UDP_API_Definition):
   - [ ] `NOTIFICATIONADD`
   - [ ] `NOTIFICATIONDEL`
 - Buddy Commands:
-  - [ ] `BUDDYADD`
-  - [ ] `BUDDYDEL`
-  - [ ] `BUDDYACCEPT`
-  - [ ] `BUDDYDENY`
-  - [ ] `BUDDYLIST`
-  - [ ] `BUDDYSTATE`
+  - [x] `BUDDYADD` (untested because my test client got banned)
+  - [x] `BUDDYDEL` (untested because my test client got banned)
+  - [x] `BUDDYACCEPT` (untested because my test client got banned)
+  - [x] `BUDDYDENY` (untested because my test client got banned)
+  - [x] `BUDDYLIST` (untested because my test client got banned)
+  - [x] `BUDDYSTATE` (untested because my test client got banned)
 - Data Commands:
   - [x] `ANIME`: the `amask` from the docs is incomplete/outdated also searching by name is completely broken as well
   - [x] `ANIMEDESC`
@@ -64,9 +64,9 @@ Commands implemented from the [docs](https://wiki.anidb.net/UDP_API_Definition):
   - [x] `CREATOR`
   - [x] `EPISODE`
   - [x] `FILE`: the server is very trigger happy when you use this command, I got banned while adding support for this...
-  - [x] `GROUP`
-  - [x] `GROUPSTATUS`
-  - [x] `UPDATED`
+  - [x] `GROUP` (untested because my test client got banned)
+  - [x] `GROUPSTATUS` (untested because my test client got banned)
+  - [x] `UPDATED` (untested because my test client got banned)
 - MyList Commands:
   - [ ] `MYLIST`
   - [ ] `MYLISTADD`
