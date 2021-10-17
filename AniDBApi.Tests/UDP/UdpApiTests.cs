@@ -266,7 +266,7 @@ public class UdpApiTests
             res => Assert.Equal("235753", res.Lines[0][0]));
     }
 
-    [Fact]
+    /*[Fact]
     public Task TestFileWithId()
     {
         return TestSimpleCommand(
@@ -277,7 +277,7 @@ public class UdpApiTests
             null,
             1,
             res => Assert.Equal("2683771", res.Lines[0][0]));
-    }
+    }*/
 
     private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)

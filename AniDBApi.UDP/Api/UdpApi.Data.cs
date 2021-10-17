@@ -92,5 +92,26 @@ namespace AniDBApi.UDP
             => CreateCommand("FILE", cancellationToken, $"aid={animeId.ToString()}", $"gid={groupId.ToString()}", $"epno={episodeNumber.ToString()}", $"fmask={fileMask.ToString("X")[6..]}", $"amask={animeMask:X}");
 
         #endregion
+
+        public Task<UdpApiResult> Group(int groupId, CancellationToken cancellationToken = default)
+            => CreateCommand("GROUP", cancellationToken, $"gid={groupId.ToString()}");
+
+        public Task<UdpApiResult> Group(string groupName, CancellationToken cancellationToken = default)
+            => CreateCommand("GROUP", cancellationToken, $"gname={groupName}");
+
+        public Task<UdpApiResult> GroupStatus(int animeId, CancellationToken cancellationToken = default)
+            => CreateCommand("GROUPSTATUS", cancellationToken, $"aid={animeId.ToString()}");
+
+        public Task<UdpApiResult> GroupStatus(int animeId, GroupStatusCompletionState completionState, CancellationToken cancellationToken = default)
+            => CreateCommand("GROUPSTATUS", cancellationToken, $"aid={animeId.ToString()}", $"state={((int)completionState).ToString()}");
+
+        public Task<UdpApiResult> Updated(CancellationToken cancellationToken = default)
+            => CreateCommand("UPDATED", cancellationToken, "entity=1");
+
+        public Task<UdpApiResult> Updated(int age, CancellationToken cancellationToken = default)
+            => CreateCommand("UPDATED", cancellationToken, "entity=1", $"age={age.ToString()}");
+
+        public Task<UdpApiResult> Updated(long time, CancellationToken cancellationToken = default)
+            => CreateCommand("UPDATED", cancellationToken, "entity=1", $"time={time.ToString()}");
     }
 }
