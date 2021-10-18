@@ -76,7 +76,7 @@ namespace AniDBApi.UDP
         public Task<UdpApiResult> File(int fileId, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
             => CreateCommand("FILE", cancellationToken, $"fid={fileId.ToString()}", $"fmask={fileMask.ToString("X")[6..]}", $"amask={animeMask:X}");
 
-        public Task<UdpApiResult> File(int size, string hash, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
+        public Task<UdpApiResult> File(long size, string hash, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
             => CreateCommand("FILE", cancellationToken, $"size={size.ToString()}", $"ed2k={hash}", $"fmask={fileMask.ToString("X")[6..]}", $"amask={animeMask:X}");
 
         public Task<UdpApiResult> File(string animeName, string groupName, int episodeNumber, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)

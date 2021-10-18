@@ -266,18 +266,158 @@ public class UdpApiTests
             res => Assert.Equal("235753", res.Lines[0][0]));
     }
 
-    /*[Fact]
+    [Fact]
     public Task TestFileWithId()
     {
+        Assert.True(TestUtils.IsCI, "You can get banned very quickly, don't use this in a non-CI context.");
+
         return TestSimpleCommand(
             "FILE",
-            null,
-            api => api.File(2683771, FileMask.Ed2k),
+            "FILE-id",
+            api => api.File(2603934, FileMask.Ed2k, FileAnimeMask.EnglishName),
             220,
             null,
             1,
-            res => Assert.Equal("2683771", res.Lines[0][0]));
-    }*/
+            res => Assert.Equal("2603934", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestFileWithSizeAndHash()
+    {
+        Assert.True(TestUtils.IsCI, "You can get banned very quickly, don't use this in a non-CI context.");
+
+        return TestSimpleCommand(
+            "FILE",
+            "FILE-size&hash",
+            api => api.File(7262144789, "b036c4c4de9522e96e235a5a797d8c15", FileMask.Ed2k, FileAnimeMask.EnglishName),
+            220,
+            null,
+            1,
+            res => Assert.Equal("2849075", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestFileWithANameGNameEpNo()
+    {
+        Assert.True(TestUtils.IsCI, "You can get banned very quickly, don't use this in a non-CI context.");
+
+        return TestSimpleCommand(
+            "FILE",
+            "FILE-aname&gname&epno",
+            api => api.File("Violet Evergarden the Movie", "EMBER", 1, FileMask.Ed2k, FileAnimeMask.EnglishName),
+            220,
+            null,
+            1,
+            res => Assert.Equal("2869654", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestFileWithANameGIdEpNo()
+    {
+        Assert.True(TestUtils.IsCI, "You can get banned very quickly, don't use this in a non-CI context.");
+
+        return TestSimpleCommand(
+            "FILE",
+            "FILE-aname&gid&epno",
+            api => api.File("Cowboy Bebop", 16576, 1, FileMask.Ed2k, FileAnimeMask.EnglishName),
+            220,
+            null,
+            1,
+            res => Assert.Equal("2755871", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestFileWithAIdGNameEpNo()
+    {
+        Assert.True(TestUtils.IsCI, "You can get banned very quickly, don't use this in a non-CI context.");
+
+        return TestSimpleCommand(
+            "FILE",
+            "FILE-aid&gname&epno",
+            api => api.File(6529, "hydes", 1, FileMask.Ed2k, FileAnimeMask.EnglishName),
+            220,
+            null,
+            1,
+            res => Assert.Equal("2755844", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestFileWithAIdGIdEpNo()
+    {
+        Assert.True(TestUtils.IsCI, "You can get banned very quickly, don't use this in a non-CI context.");
+
+        return TestSimpleCommand(
+            "FILE",
+            "FILE-aid&gid&epno",
+            api => api.File(28, 16576, 1, FileMask.Ed2k, FileAnimeMask.EnglishName),
+            220,
+            null,
+            1,
+            res => Assert.Equal("2714876", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestGroupWithId()
+    {
+        return TestSimpleCommand(
+            "GROUP",
+            "GROUP",
+            api => api.Group(16576),
+            250,
+            null,
+            1,
+            res => Assert.Equal("16576", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestGroupWithName()
+    {
+        return TestSimpleCommand(
+            "GROUP",
+            "GROUP",
+            api => api.Group("hydes"),
+            250,
+            null,
+            1,
+            res => Assert.Equal("16576", res.Lines[0][0]));
+    }
+
+    [Fact]
+    public Task TestGroupStatus()
+    {
+        return TestSimpleCommand(
+            "GROUPSTATUS",
+            "GROUPSTATUS",
+            api => api.GroupStatus(7729),
+            225,
+            null,
+            42);
+    }
+
+    [Fact]
+    public Task TestGroupStatusWithStatus()
+    {
+        return TestSimpleCommand(
+            "GROUPSTATUS",
+            "GROUPSTATUS-status",
+            api => api.GroupStatus(7729, GroupStatusCompletionState.Complete),
+            225,
+            null,
+            42);
+    }
+
+    [Fact]
+    public Task TestUpdated()
+    {
+        return TestSimpleCommand(
+            "UPDATED",
+            "UPDATED",
+            api => api.Updated(),
+            243,
+            null,
+            1,
+            res => Assert.Equal("1", res.Lines[0][0]));
+    }
 
     private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
