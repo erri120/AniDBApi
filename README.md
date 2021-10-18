@@ -80,5 +80,5 @@ Commands implemented from the [docs](https://wiki.anidb.net/UDP_API_Definition):
   - [x] `VERSION`: does not require a session
   - [x] `UPTIME`: does not require a session
   - [ ] `ENCODING`: will never be implemented, encoding is already set to UTF-8 in the `AUTH` Command
-  - [ ] `SENDMSG`
+  - [x] `SENDMSG`
   - [x] `USER`: does not require a session

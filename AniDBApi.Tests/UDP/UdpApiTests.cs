@@ -419,6 +419,19 @@ public class UdpApiTests
             res => Assert.Equal("1", res.Lines[0][0]));
     }
 
+    [Fact]
+    public Task TestSendMsg()
+    {
+        var (username, _) = GetUserCredentials();
+
+        return TestSimpleCommand(
+            "SENDMSG",
+            null,
+            api => api.SendMsg(username, "Message to self", "Hello myself!"),
+            294,
+            "SENDMSG SUCCESSFUL");
+    }
+
     private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
     {
