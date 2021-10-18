@@ -33,6 +33,8 @@ The interface [`AniDBApi.IHttpApi`](AniDBApi/IHttpApi.cs) is implemented by [Htt
 
 ## UDP
 
+Supported Version: `0.03.730 (2015-03-25)`
+
 Commands implemented from the [docs](https://wiki.anidb.net/UDP_API_Definition):
 
 - Authing Commands:
@@ -47,8 +49,8 @@ Commands implemented from the [docs](https://wiki.anidb.net/UDP_API_Definition):
   - [ ] `NOTIFYACK`
   - [ ] `PUSHACK`
 - Notification Commands:
-  - [ ] `NOTIFICATIONADD`
-  - [ ] `NOTIFICATIONDEL`
+  - [x] `NOTIFICATIONADD`
+  - [x] `NOTIFICATIONDEL`
 - Buddy Commands:
   - [x] `BUDDYADD`
   - [x] `BUDDYDEL`
