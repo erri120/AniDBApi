@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -67,13 +66,12 @@ namespace AniDBApi.UDP
             _logger.LogInformation("Sending Command {CommandName}", commandName);
             await _rateLimiter.Trigger(cancellationToken);
 
+            // TODO: look at compression in AUTH
+
             var bytes = DataEncoding.GetBytes(commandString);
             if (_encryptionKey != null && IsEncrypted)
             {
-                using var aes = Aes.Create();
-                aes.BlockSize = 128;
-                aes.Key = _encryptionKey;
-                aes.Mode = CipherMode.ECB;
+                using var aes = CreateAes(_encryptionKey);
                 bytes = aes.EncryptEcb(bytes, PaddingMode.PKCS7);
             }
 
@@ -82,6 +80,7 @@ namespace AniDBApi.UDP
             if (length != bytes.Length)
                 return UdpApiResult.CreateInternalError(_logger, $"Unable to send entire Command, only {length.ToString()} bytes out of {bytes.Length.ToString()} have been sent");
 
+            // TODO: maybe return a "Timeout" UdpApiResult instead of an exception
             var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts.CancelAfter(ReceiveTimeout);
 
@@ -90,10 +89,7 @@ namespace AniDBApi.UDP
             var resultBytes = result.Buffer;
             if (_encryptionKey != null && IsEncrypted)
             {
-                using var aes = Aes.Create();
-                aes.BlockSize = 128;
-                aes.Key = _encryptionKey;
-                aes.Mode = CipherMode.ECB;
+                using var aes = CreateAes(_encryptionKey);
                 resultBytes = aes.DecryptEcb(resultBytes, PaddingMode.PKCS7);
             }
 
@@ -105,14 +101,27 @@ namespace AniDBApi.UDP
         private byte[] CreateEncryptionKey(string apiKey, string salt)
         {
             var concat = apiKey + salt;
-            var bytes = DataEncoding.GetBytes(concat);
+            var byteCount = DataEncoding.GetByteCount(concat);
+            Span<byte> span = stackalloc byte[byteCount];
+
+            if (byteCount != DataEncoding.GetBytes(concat, span))
+                throw new NotImplementedException();
 
             var hash = new byte[16];
-            var count = MD5.HashData(new ReadOnlySpan<byte>(bytes, 0, bytes.Length), new Span<byte>(hash, 0, hash.Length));
+            var count = MD5.HashData(span, new Span<byte>(hash, 0, hash.Length));
             if (count != hash.Length)
                 throw new NotImplementedException();
 
             return hash;
+        }
+
+        private static Aes CreateAes(byte[] encryptionKey)
+        {
+            var aes = Aes.Create();
+            aes.BlockSize = 128;
+            aes.Key = encryptionKey;
+            aes.Mode = CipherMode.ECB;
+            return aes;
         }
 
         private static string GetStringAfterReturnCode(UdpApiResult result)
@@ -151,8 +160,6 @@ namespace AniDBApi.UDP
 
         internal UdpApiResult CreateResult(byte[] resultBytes)
         {
-            //"300 PONG\n"
-
             var bytes = new ReadOnlySpan<byte>(resultBytes, 0, resultBytes.Length);
             var charCount = DataEncoding.GetCharCount(bytes);
             Span<char> chars = stackalloc char[charCount];
