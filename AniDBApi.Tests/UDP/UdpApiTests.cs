@@ -432,6 +432,30 @@ public class UdpApiTests
             "SENDMSG SUCCESSFUL");
     }
 
+    [Fact]
+    public Task TestNotificationAdd()
+    {
+        return TestSimpleCommand(
+            "NOTIFICATIONADD",
+            null,
+            api => api.NotificationAddGroup(16576, NotificationType.All, NotificationPriority.High),
+            246,
+            "NOTIFICATION ITEM ADDED",
+            1);
+    }
+
+    [Fact]
+    public Task TestNotificationDel()
+    {
+        return TestSimpleCommand(
+            "NOTIFICATIONDEL",
+            null,
+            api => api.NotificationDelGroup(16576),
+            246,
+            "NOTIFICATION ITEM DELETED",
+            1);
+    }
+
     private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
     {
