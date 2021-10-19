@@ -451,7 +451,7 @@ public class UdpApiTests
             "NOTIFICATIONDEL",
             null,
             api => api.NotificationDelGroup(16576),
-            246,
+            247,
             "NOTIFICATION ITEM DELETED",
             1);
     }
@@ -505,7 +505,7 @@ public class UdpApiTests
     private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, ValueTask<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
     {
-        var api = SetupApi(commandName, resultFile ?? $"{commandName}.dat");
+        var api = SetupApi(commandName, resultFile == null ? $"{commandName}.dat" : $"{resultFile}.dat");
         await using var session = await CreateSession(api);
 
         var res = await func(api);
