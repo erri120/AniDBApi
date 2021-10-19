@@ -5,6 +5,12 @@ namespace AniDBApi.UDP
 {
     public partial class UdpApi
     {
+        public Task<UdpApiResult> MyListExportQueue(string templateName, CancellationToken cancellationToken = default)
+            => CreateCommand("MYLISTEXPORT", cancellationToken, $"template={templateName}");
+
+        public Task<UdpApiResult> MyListExportCancel(CancellationToken cancellationToken = default)
+            => CreateCommand("MYLISTEXPORT", cancellationToken, "cancel=1");
+
         public Task<UdpApiResult> Ping(CancellationToken cancellationToken = default)
             => SendAndReceive("PING", "PING", cancellationToken);
 

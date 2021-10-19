@@ -456,6 +456,28 @@ public class UdpApiTests
             1);
     }
 
+    [Fact]
+    public Task TestMyListExport()
+    {
+        return TestSimpleCommand(
+            "MYLISTEXPORT",
+            null,
+            api => api.MyListExportQueue("csv-adborg"),
+            217,
+            "MYLIST EXPORT QUEUED");
+    }
+
+    [Fact]
+    public Task TestMyListExportCancel()
+    {
+        return TestSimpleCommand(
+            "MYLISTEXPORT",
+            "MYLISTEXPORT-cancel",
+            api => api.MyListExportCancel(),
+            218,
+            "EXPORT CANCELLED");
+    }
+
     private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
     {

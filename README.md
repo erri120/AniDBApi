@@ -77,7 +77,7 @@ Commands implemented from the [docs](https://wiki.anidb.net/UDP_API_Definition):
   - [ ] `VOTE`
   - [ ] `RANDOM`
 - Misc Commands:
-  - [ ] `MYLISTEXPORT`
+  - [x] `MYLISTEXPORT`
   - [x] `PING`: does not require a session
   - [x] `VERSION`: does not require a session
   - [x] `UPTIME`: does not require a session

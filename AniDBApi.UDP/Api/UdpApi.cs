@@ -52,7 +52,7 @@ namespace AniDBApi.UDP
             _client.Connect(server, port);
         }
 
-        private async Task<UdpApiResult> CreateCommand(string commandName, CancellationToken cancellationToken, params string[] parameters)
+        private async Task<UdpApiResult> CreateCommand(string commandName, CancellationToken cancellationToken, params string?[] parameters)
         {
             if (!IsAuthenticated)
                 return UdpApiResult.CreateMissingSessionError(_logger, commandName);
@@ -139,6 +139,8 @@ namespace AniDBApi.UDP
             foreach (var parameter in parameters)
             {
                 if (parameter == null) continue;
+                // TODO: implement escape scheme
+
                 sb.Append(first ? $"{parameter}" : $"&{parameter}");
                 if (first) first = false;
             }
