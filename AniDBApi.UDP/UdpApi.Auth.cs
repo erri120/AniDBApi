@@ -7,7 +7,7 @@ namespace AniDBApi.UDP
 {
     public partial class UdpApi
     {
-        public async Task<UdpApiResult> Encrypt(string username, string apiKey, CancellationToken cancellationToken = default)
+        public async ValueTask<UdpApiResult> Encrypt(string username, string apiKey, CancellationToken cancellationToken = default)
         {
             if (IsEncrypted)
                 return UdpApiResult.CreateInternalError(_logger, "Session is already encrypted!");
@@ -31,7 +31,7 @@ namespace AniDBApi.UDP
             return result;
         }
 
-        public async Task<UdpApiResult> Auth(string username, string password, CancellationToken cancellationToken = default)
+        public async ValueTask<UdpApiResult> Auth(string username, string password, CancellationToken cancellationToken = default)
         {
             if (IsAuthenticated)
                 return UdpApiResult.CreateInternalError(_logger, "User is already authenticated!");
@@ -61,7 +61,7 @@ namespace AniDBApi.UDP
             return result;
         }
 
-        public async Task<UdpApiResult> Logout(CancellationToken cancellationToken = default)
+        public async ValueTask<UdpApiResult> Logout(CancellationToken cancellationToken = default)
         {
             if (!IsAuthenticated)
                 return UdpApiResult.CreateMissingSessionError(_logger, "LOGOUT");

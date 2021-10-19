@@ -3,22 +3,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace AniDBApi.UDP
+namespace AniDBApi
 {
     [PublicAPI]
     public class AuthenticatedSession : IDisposable, IAsyncDisposable
     {
-        private protected readonly UdpApi API;
+        private protected readonly IUdpApi API;
 
         public UdpApiResult? AuthResult { get; private protected set; }
         public virtual bool IsActive => API.IsAuthenticated;
 
-        internal AuthenticatedSession(UdpApi api)
+        internal AuthenticatedSession(IUdpApi api)
         {
             API = api;
         }
 
-        public static async Task<AuthenticatedSession> CreateSession(UdpApi api, string username, string password, CancellationToken cancellationToken = default)
+        public static async Task<AuthenticatedSession> CreateSession(IUdpApi api, string username, string password, CancellationToken cancellationToken = default)
         {
             var session = new AuthenticatedSession(api);
             session.AuthResult = await api.Auth(username, password, cancellationToken);

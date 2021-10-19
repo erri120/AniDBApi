@@ -9,7 +9,7 @@ namespace AniDBApi
     {
         private readonly AsyncLock _lock = new();
         private readonly TimeSpan _interval;
-        private DateTime _lastTrigger = DateTime.UnixEpoch;
+        public DateTime LastTrigger { get; private set; } = DateTime.UnixEpoch;
 
         public RateLimiter(TimeSpan interval)
         {
@@ -21,17 +21,17 @@ namespace AniDBApi
             using (await _lock.LockAsync(cancellationToken))
             {
                 var now = DateTime.UtcNow;
-                var diff = now - _lastTrigger;
+                var diff = now - LastTrigger;
 
                 if (diff > _interval)
                 {
-                    _lastTrigger = now;
+                    LastTrigger = now;
                     return;
                 }
 
                 var waitTimeSpan = _interval - diff + TimeSpan.FromMilliseconds(100);
                 await Task.Delay(waitTimeSpan, cancellationToken);
-                _lastTrigger = DateTime.UtcNow;
+                LastTrigger = DateTime.UtcNow;
             }
         }
     }

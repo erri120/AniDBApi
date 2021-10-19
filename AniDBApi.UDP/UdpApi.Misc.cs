@@ -5,22 +5,22 @@ namespace AniDBApi.UDP
 {
     public partial class UdpApi
     {
-        public Task<UdpApiResult> MyListExportQueue(string templateName, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> MyListExportQueue(string templateName, CancellationToken cancellationToken = default)
             => CreateCommand("MYLISTEXPORT", cancellationToken, $"template={templateName}");
 
-        public Task<UdpApiResult> MyListExportCancel(CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> MyListExportCancel(CancellationToken cancellationToken = default)
             => CreateCommand("MYLISTEXPORT", cancellationToken, "cancel=1");
 
-        public Task<UdpApiResult> Ping(CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Ping(CancellationToken cancellationToken = default)
             => SendAndReceive("PING", "PING", cancellationToken);
 
-        public Task<UdpApiResult> Version(CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Version(CancellationToken cancellationToken = default)
             => SendAndReceive("VERSION", "VERSION", cancellationToken);
 
-        public Task<UdpApiResult> Uptime(CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Uptime(CancellationToken cancellationToken = default)
             => CreateCommand("UPTIME", cancellationToken);
 
-        public async Task<UdpApiResult> SendMsg(string username, string title, string body, CancellationToken cancellationToken = default)
+        public async ValueTask<UdpApiResult> SendMsg(string username, string title, string body, CancellationToken cancellationToken = default)
         {
             if (title.Length >= 50)
                 return UdpApiResult.CreateInternalError(_logger, "Title must not be longer than 50 chars!");
@@ -30,7 +30,7 @@ namespace AniDBApi.UDP
             return await CreateCommand("SENDMSG", cancellationToken, $"to={username}", $"title={title}", $"body={body}");
         }
 
-        public Task<UdpApiResult> User(string user, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> User(string user, CancellationToken cancellationToken = default)
             => CreateCommand("USER", cancellationToken, $"user={user}");
     }
 }

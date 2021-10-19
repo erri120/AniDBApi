@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace AniDBApi.UDP
 {
     [PublicAPI]
-    public partial class UdpApi
+    public partial class UdpApi : IUdpApi
     {
         private readonly RateLimiter _rateLimiter;
 
@@ -26,7 +26,7 @@ namespace AniDBApi.UDP
         private readonly int _clientVer;
 
         public TimeSpan ReceiveTimeout { get; set; } = TimeSpan.FromSeconds(10);
-
+        public DateTime LastApiCall => _rateLimiter.LastTrigger;
         public Encoding DataEncoding { get; private set; } = Encoding.ASCII;
         public bool IsAuthenticated { get; private set; }
         public bool IsEncrypted { get; private set; }
@@ -52,19 +52,19 @@ namespace AniDBApi.UDP
             _client.Connect(server, port);
         }
 
-        private async Task<UdpApiResult> CreateCommand(string commandName, CancellationToken cancellationToken, params string?[] parameters)
+        private ValueTask<UdpApiResult> CreateCommand(string commandName, CancellationToken cancellationToken, params string?[] parameters)
         {
             if (!IsAuthenticated)
-                return UdpApiResult.CreateMissingSessionError(_logger, commandName);
+                return ValueTask.FromResult(UdpApiResult.CreateMissingSessionError(_logger, commandName));
 
             var commandString = CreateCommandString(commandName, true, parameters);
-            return await SendAndReceive(commandName, commandString, cancellationToken);
+            return SendAndReceive(commandName, commandString, cancellationToken);
         }
 
-        private async Task<UdpApiResult> SendAndReceive(string commandName, string commandString, CancellationToken cancellationToken)
+        private async ValueTask<UdpApiResult> SendAndReceive(string commandName, string commandString, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Sending Command {CommandName}", commandName);
-            await _rateLimiter.Trigger(cancellationToken);
+            await _rateLimiter.Trigger(cancellationToken).ConfigureAwait(false);
 
             // TODO: look at compression in AUTH
 
@@ -76,7 +76,7 @@ namespace AniDBApi.UDP
             }
 
             // TODO: there is no overload for byte[] that accepts a CancellationToken so this uses SendAsync(ReadOnlyMemory<byte>, CancellationToken)
-            var length = await _client.SendAsync(bytes, cancellationToken);
+            var length = await _client.SendAsync(bytes, cancellationToken).ConfigureAwait(false);
             if (length != bytes.Length)
                 return UdpApiResult.CreateInternalError(_logger, $"Unable to send entire Command, only {length.ToString()} bytes out of {bytes.Length.ToString()} have been sent");
 
@@ -84,7 +84,7 @@ namespace AniDBApi.UDP
             var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts.CancelAfter(ReceiveTimeout);
 
-            var result = await _client.ReceiveAsync(commandName, cts.Token);
+            var result = await _client.ReceiveAsync(commandName, cts.Token).ConfigureAwait(false);
 
             var resultBytes = result.Buffer;
             if (_encryptionKey != null && IsEncrypted)

@@ -3,7 +3,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 
-namespace AniDBApi.UDP
+namespace AniDBApi
 {
     [PublicAPI]
     public sealed class UdpApiResult
@@ -32,6 +32,7 @@ namespace AniDBApi.UDP
             return CreateInternalError(logger, $"Command {commandName} requires a session!");
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return InternalLines.Any()

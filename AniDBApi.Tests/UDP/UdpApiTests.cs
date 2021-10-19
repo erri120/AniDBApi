@@ -502,7 +502,7 @@ public class UdpApiTests
             1);
     }
 
-    private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
+    private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, ValueTask<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
     {
         var api = SetupApi(commandName, resultFile ?? $"{commandName}.dat");
@@ -513,7 +513,7 @@ public class UdpApiTests
         action?.Invoke(res);
     }
 
-    private static async Task<AuthenticatedSession> CreateSession(UdpApi api)
+    private static async Task<AuthenticatedSession> CreateSession(IUdpApi api)
     {
         var (username, password) = GetUserCredentials();
         var authenticatedSession = await AuthenticatedSession.CreateSession(api, username, password);

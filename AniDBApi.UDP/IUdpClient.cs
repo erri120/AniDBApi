@@ -4,12 +4,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace AniDBApi.UDP;
-
-[PublicAPI]
-public interface IUdpClient
+namespace AniDBApi.UDP
 {
-    void Connect(string hostname, int port);
-    ValueTask<int> SendAsync(ReadOnlyMemory<byte> datagram, CancellationToken cancellationToken = default);
-    ValueTask<UdpReceiveResult> ReceiveAsync(string commandName, CancellationToken cancellationToken);
+    [PublicAPI]
+    public interface IUdpClient
+    {
+        void Connect(string hostname, int port);
+        ValueTask<int> SendAsync(ReadOnlyMemory<byte> datagram, CancellationToken cancellationToken = default);
+        ValueTask<UdpReceiveResult> ReceiveAsync(string commandName, CancellationToken cancellationToken);
+    }
 }
+

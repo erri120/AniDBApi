@@ -21,7 +21,7 @@ namespace AniDBApi.UDP
                                          AnimeMask.CharacterIdList | AnimeMask.SpecialsCount | AnimeMask.CreditsCount |
                                          AnimeMask.OtherCount | AnimeMask.TrailerCount | AnimeMask.ParodyCount;*/
 
-        public async Task<UdpApiResult> Anime(int id, /*AnimeMask mask,*/ CancellationToken cancellationToken = default)
+        public async ValueTask<UdpApiResult> Anime(int id, /*AnimeMask mask,*/ CancellationToken cancellationToken = default)
         {
             if (!IsAuthenticated)
                 return UdpApiResult.CreateMissingSessionError(_logger, "ANIME");
@@ -35,7 +35,7 @@ namespace AniDBApi.UDP
             return await SendAndReceive("ANIME", commandString, cancellationToken);
         }
 
-        public async Task<UdpApiResult> Anime(string name, /*AnimeMask mask,*/ CancellationToken cancellationToken = default)
+        public async ValueTask<UdpApiResult> Anime(string name, /*AnimeMask mask,*/ CancellationToken cancellationToken = default)
         {
             if (!IsAuthenticated)
                 return UdpApiResult.CreateMissingSessionError(_logger, "ANIME");
@@ -50,68 +50,68 @@ namespace AniDBApi.UDP
             return await SendAndReceive("ANIME", commandString, cancellationToken);
         }
 
-        public Task<UdpApiResult> AnimeDesc(int id, int part, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> AnimeDesc(int id, int part, CancellationToken cancellationToken = default)
             => CreateCommand("ANIMEDESC", cancellationToken, $"aid={id.ToString()}", $"part={part.ToString()}");
 
-        public Task<UdpApiResult> Calendar(CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Calendar(CancellationToken cancellationToken = default)
             => CreateCommand("CALENDAR", cancellationToken);
 
-        public Task<UdpApiResult> Character(int characterId, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Character(int characterId, CancellationToken cancellationToken = default)
             => CreateCommand("CHARACTER", cancellationToken, $"charid={characterId.ToString()}");
 
-        public Task<UdpApiResult> Creator(int creatorId, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Creator(int creatorId, CancellationToken cancellationToken = default)
             => CreateCommand("CREATOR", cancellationToken, $"creatorid={creatorId.ToString()}");
 
-        public Task<UdpApiResult> Episode(int episodeId, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Episode(int episodeId, CancellationToken cancellationToken = default)
             => CreateCommand("EPISODE", cancellationToken, $"eid={episodeId.ToString()}");
 
-        public Task<UdpApiResult> Episode(string animeName, int episodeNumber, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Episode(string animeName, int episodeNumber, CancellationToken cancellationToken = default)
             => CreateCommand("EPISODE", cancellationToken, $"aname={animeName}", $"epno={episodeNumber.ToString()}");
 
-        public Task<UdpApiResult> Episode(int animeId, int episodeNumber, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Episode(int animeId, int episodeNumber, CancellationToken cancellationToken = default)
             => CreateCommand("EPISODE", cancellationToken, $"aid={animeId.ToString()}", $"epno={episodeNumber.ToString()}");
 
         #region File Command
 
-        public Task<UdpApiResult> File(int fileId, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> File(int fileId, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
             => CreateCommand("FILE", cancellationToken, $"fid={fileId.ToString()}", $"fmask={fileMask.ToString("X")[6..]}", $"amask={animeMask:X}");
 
-        public Task<UdpApiResult> File(long size, string hash, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> File(long size, string hash, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
             => CreateCommand("FILE", cancellationToken, $"size={size.ToString()}", $"ed2k={hash}", $"fmask={fileMask.ToString("X")[6..]}", $"amask={animeMask:X}");
 
-        public Task<UdpApiResult> File(string animeName, string groupName, int episodeNumber, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> File(string animeName, string groupName, int episodeNumber, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
             => CreateCommand("FILE", cancellationToken, $"aname={animeName}", $"gname={groupName}", $"epno={episodeNumber.ToString()}", $"fmask={fileMask.ToString("X")[6..]}", $"amask={animeMask:X}");
 
-        public Task<UdpApiResult> File(string animeName, int groupId, int episodeNumber, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> File(string animeName, int groupId, int episodeNumber, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
             => CreateCommand("FILE", cancellationToken, $"aname={animeName}", $"gid={groupId.ToString()}", $"epno={episodeNumber.ToString()}", $"fmask={fileMask.ToString("X")[6..]}", $"amask={animeMask:X}");
 
-        public Task<UdpApiResult> File(int animeId, string groupName, int episodeNumber, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> File(int animeId, string groupName, int episodeNumber, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
             => CreateCommand("FILE", cancellationToken, $"aid={animeId.ToString()}", $"gname={groupName}", $"epno={episodeNumber.ToString()}", $"fmask={fileMask.ToString("X")[6..]}", $"amask={animeMask:X}");
 
-        public Task<UdpApiResult> File(int animeId, int groupId, int episodeNumber, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> File(int animeId, int groupId, int episodeNumber, FileMask fileMask, FileAnimeMask animeMask, CancellationToken cancellationToken = default)
             => CreateCommand("FILE", cancellationToken, $"aid={animeId.ToString()}", $"gid={groupId.ToString()}", $"epno={episodeNumber.ToString()}", $"fmask={fileMask.ToString("X")[6..]}", $"amask={animeMask:X}");
 
         #endregion
 
-        public Task<UdpApiResult> Group(int groupId, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Group(int groupId, CancellationToken cancellationToken = default)
             => CreateCommand("GROUP", cancellationToken, $"gid={groupId.ToString()}");
 
-        public Task<UdpApiResult> Group(string groupName, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Group(string groupName, CancellationToken cancellationToken = default)
             => CreateCommand("GROUP", cancellationToken, $"gname={groupName}");
 
-        public Task<UdpApiResult> GroupStatus(int animeId, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> GroupStatus(int animeId, CancellationToken cancellationToken = default)
             => CreateCommand("GROUPSTATUS", cancellationToken, $"aid={animeId.ToString()}");
 
-        public Task<UdpApiResult> GroupStatus(int animeId, GroupStatusCompletionState completionState, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> GroupStatus(int animeId, GroupStatusCompletionState completionState, CancellationToken cancellationToken = default)
             => CreateCommand("GROUPSTATUS", cancellationToken, $"aid={animeId.ToString()}", $"state={((int)completionState).ToString()}");
 
-        public Task<UdpApiResult> Updated(CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Updated(CancellationToken cancellationToken = default)
             => CreateCommand("UPDATED", cancellationToken, "entity=1");
 
-        public Task<UdpApiResult> Updated(int age, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Updated(int age, CancellationToken cancellationToken = default)
             => CreateCommand("UPDATED", cancellationToken, "entity=1", $"age={age.ToString()}");
 
-        public Task<UdpApiResult> Updated(long time, CancellationToken cancellationToken = default)
+        public ValueTask<UdpApiResult> Updated(long time, CancellationToken cancellationToken = default)
             => CreateCommand("UPDATED", cancellationToken, "entity=1", $"time={time.ToString()}");
     }
 }

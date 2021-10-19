@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace AniDBApi.UDP
+namespace AniDBApi
 {
     [Flags]
     [PublicAPI]

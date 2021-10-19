@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace AniDBApi.UDP
+namespace AniDBApi
 {
     [PublicAPI]
     public enum RandomAnimeType : byte

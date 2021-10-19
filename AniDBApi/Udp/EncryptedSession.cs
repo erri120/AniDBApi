@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace AniDBApi.UDP
+namespace AniDBApi
 {
     [PublicAPI]
     public class EncryptedSession : AuthenticatedSession
@@ -10,9 +10,9 @@ namespace AniDBApi.UDP
         public UdpApiResult? EncryptResult;
         public override bool IsActive => API.IsAuthenticated && API.IsEncrypted;
 
-        internal EncryptedSession(UdpApi api) : base(api) { }
+        internal EncryptedSession(IUdpApi api) : base(api) { }
 
-        public static async Task<EncryptedSession> CreateSession(UdpApi api, string username, string password, string apiKey, CancellationToken cancellationToken = default)
+        public static async Task<EncryptedSession> CreateSession(IUdpApi api, string username, string password, string apiKey, CancellationToken cancellationToken = default)
         {
             var session = new EncryptedSession(api);
             session.EncryptResult = await api.Encrypt(username, apiKey, cancellationToken);
