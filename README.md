@@ -52,12 +52,12 @@ Commands implemented from the [docs](https://wiki.anidb.net/UDP_API_Definition):
   - [x] `NOTIFICATIONADD`
   - [x] `NOTIFICATIONDEL`
 - Buddy Commands:
-  - [x] `BUDDYADD`
-  - [x] `BUDDYDEL`
-  - [x] `BUDDYACCEPT`
-  - [x] `BUDDYDENY`
-  - [x] `BUDDYLIST`
-  - [x] `BUDDYSTATE`
+  - [x] `BUDDYADD` (untested)
+  - [x] `BUDDYDEL` (untested)
+  - [x] `BUDDYACCEPT` (untested)
+  - [x] `BUDDYDENY` (untested)
+  - [x] `BUDDYLIST` (untested)
+  - [x] `BUDDYSTATE` (untested)
 - Data Commands:
   - [x] `ANIME`: the `amask` from the docs is incomplete/outdated, also searching by name is completely broken as well
   - [x] `ANIMEDESC`
@@ -73,9 +73,9 @@ Commands implemented from the [docs](https://wiki.anidb.net/UDP_API_Definition):
   - [ ] `MYLIST`
   - [ ] `MYLISTADD`
   - [ ] `MYLISTDEL`
-  - [ ] `MYLISTSTATS`
+  - [x] `MYLISTSTATS`
   - [ ] `VOTE`
-  - [ ] `RANDOM`
+  - [x] `RANDOMANIME`
 - Misc Commands:
   - [x] `MYLISTEXPORT`
   - [x] `PING`: does not require a session

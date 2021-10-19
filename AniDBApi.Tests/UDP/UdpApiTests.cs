@@ -478,6 +478,30 @@ public class UdpApiTests
             "EXPORT CANCELLED");
     }
 
+    [Fact]
+    public Task TestMyListStats()
+    {
+        return TestSimpleCommand(
+            "MYLISTSTATS",
+            null,
+            api => api.MyListStats(),
+            222,
+            "MYLIST STATS",
+            1);
+    }
+
+    [Fact]
+    public Task TestRandomAnime()
+    {
+        return TestSimpleCommand(
+            "RANDOMANIME",
+            null,
+            api => api.RandomAnime(RandomAnimeType.FromDb),
+            230,
+            "ANIME",
+            1);
+    }
+
     private async Task TestSimpleCommand(string commandName, string? resultFile, Func<UdpApi, Task<UdpApiResult>> func,
         int returnCode, string? returnString, int lineCount = 0, Action<UdpApiResult>? action = null)
     {
